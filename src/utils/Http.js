@@ -23,6 +23,9 @@ const LoginUser = body => {
 const TokenUser = body => {
     return Axios.post(`${AUTH_ENDPOINT}/token`, body)
 }
+const LogoutUser = () => {
+    localStorage.clear()
+}
 
 const GetProduct = (filter) => {
     return Axios.get(PRODUCT_ENDPOINT, {
@@ -327,6 +330,7 @@ export {
     VerifyUser,
     LoginUser,
     TokenUser,
+    LogoutUser,
 
     GetProduct,
     GetProductById,
