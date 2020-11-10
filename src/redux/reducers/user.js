@@ -2,31 +2,35 @@ import {
     pending,
     rejected,
     fulfilled,
-    RegisterAction,
-    VerifyAction,
-    LoginAction,
-    TokenAction
+    GetUserAction,
+    GetUserByIdAction,
+    GetUserByAddressAction,
+    PostUserAction,
+    PutUserAction,
+    DeleteUserAction
 } from '../actions/actionTypes'
 
 const initialValue = {
     response: {},
-    token: '',
+    result: [],
+    resultById: {},
+    resultByAddress: [],
     isLoading: false,
     isRejected: false,
     isFulfilled: false,
     errorMessage: ''
 }
 
-const Auth = (prevState = initialValue, action) => {
+const User = (prevState = initialValue, action) => {
     switch (action.type) {
-        case RegisterAction + pending:
+        case GetUserAction + pending:
             return {
                 ...prevState,
                 isLoading: true,
                 isRejected: false,
                 isFulfilled: false
             }
-        case RegisterAction + rejected:
+        case GetUserAction + rejected:
             return {
                 ...prevState,
                 isLoading: false,
@@ -34,21 +38,22 @@ const Auth = (prevState = initialValue, action) => {
                 isFulfilled: false,
                 errorMessage: action.payload.response.data.data.message
             }
-        case RegisterAction + fulfilled:
+        case GetUserAction + fulfilled:
             return {
                 ...prevState,
                 isLoading: false,
                 isRejected: false,
-                isFulfilled: true
+                isFulfilled: true,
+                result: action.payload.data.data
             }
-        case VerifyAction + pending:
+        case GetUserByIdAction + pending:
             return {
                 ...prevState,
                 isLoading: true,
                 isRejected: false,
                 isFulfilled: false
             }
-        case VerifyAction + rejected:
+        case GetUserByIdAction + rejected:
             return {
                 ...prevState,
                 isLoading: false,
@@ -56,21 +61,22 @@ const Auth = (prevState = initialValue, action) => {
                 isFulfilled: false,
                 errorMessage: action.payload.response.data.data.message
             }
-        case VerifyAction + fulfilled:
+        case GetUserByIdAction + fulfilled:
             return {
                 ...prevState,
                 isLoading: false,
                 isRejected: false,
-                isFulfilled: true
+                isFulfilled: true,
+                resultById: action.payload.data.data
             }
-        case LoginAction + pending:
+        case GetUserByAddressAction + pending:
             return {
                 ...prevState,
                 isLoading: true,
                 isRejected: false,
                 isFulfilled: false
             }
-        case LoginAction + rejected:
+        case GetUserByAddressAction + rejected:
             return {
                 ...prevState,
                 isLoading: false,
@@ -78,7 +84,30 @@ const Auth = (prevState = initialValue, action) => {
                 isFulfilled: false,
                 errorMessage: action.payload.response.data.data.message
             }
-        case LoginAction + fulfilled:
+        case GetUserByAddressAction + fulfilled:
+            return {
+                ...prevState,
+                isLoading: false,
+                isRejected: false,
+                isFulfilled: true,
+                resultByAddress: action.payload.data.data
+            }
+        case PostUserAction + pending:
+            return {
+                ...prevState,
+                isLoading: true,
+                isRejected: false,
+                isFulfilled: false
+            }
+        case PostUserAction + rejected:
+            return {
+                ...prevState,
+                isLoading: false,
+                isRejected: true,
+                isFulfilled: false,
+                errorMessage: action.payload.response.data.data.message
+            }
+        case PostUserAction + fulfilled:
             return {
                 ...prevState,
                 isLoading: false,
@@ -86,14 +115,14 @@ const Auth = (prevState = initialValue, action) => {
                 isFulfilled: true,
                 response: action.payload.data.data
             }
-        case TokenAction + pending:
+        case PutUserAction + pending:
             return {
                 ...prevState,
                 isLoading: true,
                 isRejected: false,
                 isFulfilled: false
             }
-        case TokenAction + rejected:
+        case PutUserAction + rejected:
             return {
                 ...prevState,
                 isLoading: false,
@@ -101,13 +130,36 @@ const Auth = (prevState = initialValue, action) => {
                 isFulfilled: false,
                 errorMessage: action.payload.response.data.data.message
             }
-        case TokenAction + fulfilled:
+        case PutUserAction + fulfilled:
             return {
                 ...prevState,
                 isLoading: false,
                 isRejected: false,
                 isFulfilled: true,
-                token: action.payload.data.data.token
+                response: action.payload.data.data
+            }
+        case DeleteUserAction + pending:
+            return {
+                ...prevState,
+                isLoading: true,
+                isRejected: false,
+                isFulfilled: false
+            }
+        case DeleteUserAction + rejected:
+            return {
+                ...prevState,
+                isLoading: false,
+                isRejected: true,
+                isFulfilled: false,
+                errorMessage: action.payload.response.data.data.message
+            }
+        case DeleteUserAction + fulfilled:
+            return {
+                ...prevState,
+                isLoading: false,
+                isRejected: false,
+                isFulfilled: true,
+                response: action.payload.data.data
             }
         default:
             return {
@@ -116,4 +168,4 @@ const Auth = (prevState = initialValue, action) => {
     }
 }
 
-export default Auth
+export default User

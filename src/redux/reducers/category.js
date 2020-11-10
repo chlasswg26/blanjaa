@@ -2,31 +2,33 @@ import {
     pending,
     rejected,
     fulfilled,
-    RegisterAction,
-    VerifyAction,
-    LoginAction,
-    TokenAction
+    GetCategoryAction,
+    GetCategoryByIdAction,
+    PostCategoryAction,
+    PutCategoryAction,
+    DeleteCategoryAction
 } from '../actions/actionTypes'
 
 const initialValue = {
     response: {},
-    token: '',
+    result: [],
+    resultById: {},
     isLoading: false,
     isRejected: false,
     isFulfilled: false,
     errorMessage: ''
 }
 
-const Auth = (prevState = initialValue, action) => {
+const Category = (prevState = initialValue, action) => {
     switch (action.type) {
-        case RegisterAction + pending:
+        case GetCategoryAction + pending:
             return {
                 ...prevState,
                 isLoading: true,
                 isRejected: false,
                 isFulfilled: false
             }
-        case RegisterAction + rejected:
+        case GetCategoryAction + rejected:
             return {
                 ...prevState,
                 isLoading: false,
@@ -34,21 +36,22 @@ const Auth = (prevState = initialValue, action) => {
                 isFulfilled: false,
                 errorMessage: action.payload.response.data.data.message
             }
-        case RegisterAction + fulfilled:
+        case GetCategoryAction + fulfilled:
             return {
                 ...prevState,
                 isLoading: false,
                 isRejected: false,
-                isFulfilled: true
+                isFulfilled: true,
+                result: action.payload.data.data
             }
-        case VerifyAction + pending:
+        case GetCategoryByIdAction + pending:
             return {
                 ...prevState,
                 isLoading: true,
                 isRejected: false,
                 isFulfilled: false
             }
-        case VerifyAction + rejected:
+        case GetCategoryByIdAction + rejected:
             return {
                 ...prevState,
                 isLoading: false,
@@ -56,21 +59,22 @@ const Auth = (prevState = initialValue, action) => {
                 isFulfilled: false,
                 errorMessage: action.payload.response.data.data.message
             }
-        case VerifyAction + fulfilled:
+        case GetCategoryByIdAction + fulfilled:
             return {
                 ...prevState,
                 isLoading: false,
                 isRejected: false,
-                isFulfilled: true
+                isFulfilled: true,
+                resultById: action.payload.data.data
             }
-        case LoginAction + pending:
+        case PostCategoryAction + pending:
             return {
                 ...prevState,
                 isLoading: true,
                 isRejected: false,
                 isFulfilled: false
             }
-        case LoginAction + rejected:
+        case PostCategoryAction + rejected:
             return {
                 ...prevState,
                 isLoading: false,
@@ -78,7 +82,7 @@ const Auth = (prevState = initialValue, action) => {
                 isFulfilled: false,
                 errorMessage: action.payload.response.data.data.message
             }
-        case LoginAction + fulfilled:
+        case PostCategoryAction + fulfilled:
             return {
                 ...prevState,
                 isLoading: false,
@@ -86,14 +90,14 @@ const Auth = (prevState = initialValue, action) => {
                 isFulfilled: true,
                 response: action.payload.data.data
             }
-        case TokenAction + pending:
+        case PutCategoryAction + pending:
             return {
                 ...prevState,
                 isLoading: true,
                 isRejected: false,
                 isFulfilled: false
             }
-        case TokenAction + rejected:
+        case PutCategoryAction + rejected:
             return {
                 ...prevState,
                 isLoading: false,
@@ -101,13 +105,36 @@ const Auth = (prevState = initialValue, action) => {
                 isFulfilled: false,
                 errorMessage: action.payload.response.data.data.message
             }
-        case TokenAction + fulfilled:
+        case PutCategoryAction + fulfilled:
             return {
                 ...prevState,
                 isLoading: false,
                 isRejected: false,
                 isFulfilled: true,
-                token: action.payload.data.data.token
+                response: action.payload.data.data
+            }
+        case DeleteCategoryAction + pending:
+            return {
+                ...prevState,
+                isLoading: true,
+                isRejected: false,
+                isFulfilled: false
+            }
+        case DeleteCategoryAction + rejected:
+            return {
+                ...prevState,
+                isLoading: false,
+                isRejected: true,
+                isFulfilled: false,
+                errorMessage: action.payload.response.data.data.message
+            }
+        case DeleteCategoryAction + fulfilled:
+            return {
+                ...prevState,
+                isLoading: false,
+                isRejected: false,
+                isFulfilled: true,
+                response: action.payload.data.data
             }
         default:
             return {
@@ -116,4 +143,4 @@ const Auth = (prevState = initialValue, action) => {
     }
 }
 
-export default Auth
+export default Category

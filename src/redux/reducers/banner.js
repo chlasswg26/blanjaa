@@ -2,31 +2,33 @@ import {
     pending,
     rejected,
     fulfilled,
-    RegisterAction,
-    VerifyAction,
-    LoginAction,
-    TokenAction
+    GetBannerAction,
+    GetBannerByIdAction,
+    PostBannerAction,
+    PutBannerAction,
+    DeleteBannerAction
 } from '../actions/actionTypes'
 
 const initialValue = {
     response: {},
-    token: '',
+    result: [],
+    resultById: {},
     isLoading: false,
     isRejected: false,
     isFulfilled: false,
     errorMessage: ''
 }
 
-const Auth = (prevState = initialValue, action) => {
+const Banner = (prevState = initialValue, action) => {
     switch (action.type) {
-        case RegisterAction + pending:
+        case GetBannerAction + pending:
             return {
                 ...prevState,
                 isLoading: true,
                 isRejected: false,
                 isFulfilled: false
             }
-        case RegisterAction + rejected:
+        case GetBannerAction + rejected:
             return {
                 ...prevState,
                 isLoading: false,
@@ -34,21 +36,22 @@ const Auth = (prevState = initialValue, action) => {
                 isFulfilled: false,
                 errorMessage: action.payload.response.data.data.message
             }
-        case RegisterAction + fulfilled:
+        case GetBannerAction + fulfilled:
             return {
                 ...prevState,
                 isLoading: false,
                 isRejected: false,
-                isFulfilled: true
+                isFulfilled: true,
+                result: action.payload.data.data
             }
-        case VerifyAction + pending:
+        case GetBannerByIdAction + pending:
             return {
                 ...prevState,
                 isLoading: true,
                 isRejected: false,
                 isFulfilled: false
             }
-        case VerifyAction + rejected:
+        case GetBannerByIdAction + rejected:
             return {
                 ...prevState,
                 isLoading: false,
@@ -56,21 +59,22 @@ const Auth = (prevState = initialValue, action) => {
                 isFulfilled: false,
                 errorMessage: action.payload.response.data.data.message
             }
-        case VerifyAction + fulfilled:
+        case GetBannerByIdAction + fulfilled:
             return {
                 ...prevState,
                 isLoading: false,
                 isRejected: false,
-                isFulfilled: true
+                isFulfilled: true,
+                resultById: action.payload.data.data
             }
-        case LoginAction + pending:
+        case PostBannerAction + pending:
             return {
                 ...prevState,
                 isLoading: true,
                 isRejected: false,
                 isFulfilled: false
             }
-        case LoginAction + rejected:
+        case PostBannerAction + rejected:
             return {
                 ...prevState,
                 isLoading: false,
@@ -78,7 +82,7 @@ const Auth = (prevState = initialValue, action) => {
                 isFulfilled: false,
                 errorMessage: action.payload.response.data.data.message
             }
-        case LoginAction + fulfilled:
+        case PostBannerAction + fulfilled:
             return {
                 ...prevState,
                 isLoading: false,
@@ -86,14 +90,14 @@ const Auth = (prevState = initialValue, action) => {
                 isFulfilled: true,
                 response: action.payload.data.data
             }
-        case TokenAction + pending:
+        case PutBannerAction + pending:
             return {
                 ...prevState,
                 isLoading: true,
                 isRejected: false,
                 isFulfilled: false
             }
-        case TokenAction + rejected:
+        case PutBannerAction + rejected:
             return {
                 ...prevState,
                 isLoading: false,
@@ -101,13 +105,36 @@ const Auth = (prevState = initialValue, action) => {
                 isFulfilled: false,
                 errorMessage: action.payload.response.data.data.message
             }
-        case TokenAction + fulfilled:
+        case PutBannerAction + fulfilled:
             return {
                 ...prevState,
                 isLoading: false,
                 isRejected: false,
                 isFulfilled: true,
-                token: action.payload.data.data.token
+                response: action.payload.data.data
+            }
+        case DeleteBannerAction + pending:
+            return {
+                ...prevState,
+                isLoading: true,
+                isRejected: false,
+                isFulfilled: false
+            }
+        case DeleteBannerAction + rejected:
+            return {
+                ...prevState,
+                isLoading: false,
+                isRejected: true,
+                isFulfilled: false,
+                errorMessage: action.payload.response.data.data.message
+            }
+        case DeleteBannerAction + fulfilled:
+            return {
+                ...prevState,
+                isLoading: false,
+                isRejected: false,
+                isFulfilled: true,
+                response: action.payload.data.data
             }
         default:
             return {
@@ -116,4 +143,4 @@ const Auth = (prevState = initialValue, action) => {
     }
 }
 
-export default Auth
+export default Banner

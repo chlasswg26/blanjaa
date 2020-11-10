@@ -2,31 +2,35 @@ import {
     pending,
     rejected,
     fulfilled,
-    RegisterAction,
-    VerifyAction,
-    LoginAction,
-    TokenAction
+    GetProductAction,
+    GetProductByIdAction,
+    GetProductBySellerAction,
+    PostProductAction,
+    PutProductAction,
+    DeleteProductAction
 } from '../actions/actionTypes'
 
 const initialValue = {
     response: {},
-    token: '',
+    result: [],
+    resultById: {},
+    resultBySeller: [],
     isLoading: false,
     isRejected: false,
     isFulfilled: false,
     errorMessage: ''
 }
 
-const Auth = (prevState = initialValue, action) => {
+const Product = (prevState = initialValue, action) => {
     switch (action.type) {
-        case RegisterAction + pending:
+        case GetProductAction + pending:
             return {
                 ...prevState,
                 isLoading: true,
                 isRejected: false,
                 isFulfilled: false
             }
-        case RegisterAction + rejected:
+        case GetProductAction + rejected:
             return {
                 ...prevState,
                 isLoading: false,
@@ -34,21 +38,22 @@ const Auth = (prevState = initialValue, action) => {
                 isFulfilled: false,
                 errorMessage: action.payload.response.data.data.message
             }
-        case RegisterAction + fulfilled:
+        case GetProductAction + fulfilled:
             return {
                 ...prevState,
                 isLoading: false,
                 isRejected: false,
-                isFulfilled: true
+                isFulfilled: true,
+                result: action.payload.data.data
             }
-        case VerifyAction + pending:
+        case GetProductByIdAction + pending:
             return {
                 ...prevState,
                 isLoading: true,
                 isRejected: false,
                 isFulfilled: false
             }
-        case VerifyAction + rejected:
+        case GetProductByIdAction + rejected:
             return {
                 ...prevState,
                 isLoading: false,
@@ -56,21 +61,22 @@ const Auth = (prevState = initialValue, action) => {
                 isFulfilled: false,
                 errorMessage: action.payload.response.data.data.message
             }
-        case VerifyAction + fulfilled:
+        case GetProductByIdAction + fulfilled:
             return {
                 ...prevState,
                 isLoading: false,
                 isRejected: false,
-                isFulfilled: true
+                isFulfilled: true,
+                resultById: action.payload.data.data
             }
-        case LoginAction + pending:
+        case GetProductBySellerAction + pending:
             return {
                 ...prevState,
                 isLoading: true,
                 isRejected: false,
                 isFulfilled: false
             }
-        case LoginAction + rejected:
+        case GetProductBySellerAction + rejected:
             return {
                 ...prevState,
                 isLoading: false,
@@ -78,7 +84,30 @@ const Auth = (prevState = initialValue, action) => {
                 isFulfilled: false,
                 errorMessage: action.payload.response.data.data.message
             }
-        case LoginAction + fulfilled:
+        case GetProductBySellerAction + fulfilled:
+            return {
+                ...prevState,
+                isLoading: false,
+                isRejected: false,
+                isFulfilled: true,
+                resultBySeller: action.payload.data.data
+            }
+        case PostProductAction + pending:
+            return {
+                ...prevState,
+                isLoading: true,
+                isRejected: false,
+                isFulfilled: false
+            }
+        case PostProductAction + rejected:
+            return {
+                ...prevState,
+                isLoading: false,
+                isRejected: true,
+                isFulfilled: false,
+                errorMessage: action.payload.response.data.data.message
+            }
+        case PostProductAction + fulfilled:
             return {
                 ...prevState,
                 isLoading: false,
@@ -86,14 +115,14 @@ const Auth = (prevState = initialValue, action) => {
                 isFulfilled: true,
                 response: action.payload.data.data
             }
-        case TokenAction + pending:
+        case PutProductAction + pending:
             return {
                 ...prevState,
                 isLoading: true,
                 isRejected: false,
                 isFulfilled: false
             }
-        case TokenAction + rejected:
+        case PutProductAction + rejected:
             return {
                 ...prevState,
                 isLoading: false,
@@ -101,13 +130,36 @@ const Auth = (prevState = initialValue, action) => {
                 isFulfilled: false,
                 errorMessage: action.payload.response.data.data.message
             }
-        case TokenAction + fulfilled:
+        case PutProductAction + fulfilled:
             return {
                 ...prevState,
                 isLoading: false,
                 isRejected: false,
                 isFulfilled: true,
-                token: action.payload.data.data.token
+                response: action.payload.data.data
+            }
+        case DeleteProductAction + pending:
+            return {
+                ...prevState,
+                isLoading: true,
+                isRejected: false,
+                isFulfilled: false
+            }
+        case DeleteProductAction + rejected:
+            return {
+                ...prevState,
+                isLoading: false,
+                isRejected: true,
+                isFulfilled: false,
+                errorMessage: action.payload.response.data.data.message
+            }
+        case DeleteProductAction + fulfilled:
+            return {
+                ...prevState,
+                isLoading: false,
+                isRejected: false,
+                isFulfilled: true,
+                response: action.payload.data.data
             }
         default:
             return {
@@ -116,4 +168,4 @@ const Auth = (prevState = initialValue, action) => {
     }
 }
 
-export default Auth
+export default Product

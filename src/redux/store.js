@@ -5,6 +5,6 @@ import RootReducer from './reducers'
 
 const logger = createLogger()
 const enhancer = applyMiddleware(promiseMiddleware, logger)
-const Store = createStore(RootReducer, enhancer)
+const store = createStore(RootReducer, enhancer)
 
-export default Store
+export default store
