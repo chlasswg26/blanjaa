@@ -9,6 +9,7 @@ import { createBrowserHistory } from 'history'
 import store from './redux/store'
 import Dashboard from './pages/Dashboard'
 import SignIn from './pages/Auth/SignIn'
+import SignUp from './pages/Auth/SignUp'
 
 const App = () => {
     const history = createBrowserHistory()
@@ -19,6 +20,7 @@ const App = () => {
                 <Switch>
                     <Route path='/' component={Dashboard} exact />
                     <Route path='/auth/signin' component={SignIn} />
+                    <Route path='/auth/signup' component={SignUp} />
                 </Switch>
             </Router>
         </Provider>

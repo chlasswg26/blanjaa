@@ -1,35 +1,32 @@
 module.exports = {
+    "globals": {
+        "window": true,
+        "module": true
+    },
     "env": {
         "browser": true,
-        "es2021": true,
+        "amd": true,
         "node": true
     },
-    "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended"
-    ],
-    "parser": "babel-eslint",
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true,
-            "modules": true
-        },
-        "ecmaVersion": 12,
-        "sourceType": "module"
-    },
+    "extends": ["eslint:recommended"],
     "plugins": [
         "react",
         "react-hooks"
     ],
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true,
+            "modules": true,
+            "experimentalObjectRestSpread": true
+        }
+    },
     "rules": {
         "react/jsx-uses-react": "error",
         "react/jsx-uses-vars": "error",
         "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": "warn",
-        "comma-dangle": 0,
-        "no-unused-vars": "warn",
-        "no-console": 1,
-        "no-unexpected-multiline": "warn",
-        "react/display-name": [true, {"ignoreTranspilerName": true }]
-        }
-};
+        "react-hooks/exhaustive-deps": "warn"
+    }
+}

@@ -26,7 +26,7 @@ const useAdmin = () => {
 const Auth = WrappedComponent => {
     useToken()
 
-    return (props) => {
+    return props => {
         return (
             <WrappedComponent>
                 {...props}
@@ -38,7 +38,7 @@ const Auth = WrappedComponent => {
 const Admin = WrappedComponent => {
     useAdmin()
 
-    return (props) => {
+    return props => {
         return (
             <WrappedComponent>
                 {...props}
