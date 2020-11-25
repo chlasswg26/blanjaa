@@ -1,3 +1,4 @@
+import './assets/styles/App.css'
 import { Provider } from 'react-redux'
 import {
     BrowserRouter as Router,

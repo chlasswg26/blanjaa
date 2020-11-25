@@ -1,39 +1,52 @@
-import { Schema } from 'rsuite'
+import * as Yup from 'yup'
 
-const { StringType, NumberType } = Schema.Types
-
-const SignUpModel = Schema.Model({
-    name: StringType()
-        .isRequired('This field is required.'),
-    email: StringType()
-        .isRequired('This field is required.')
-        .isEmail('Please enter a valid email address.'),
-    password: StringType()
-        .isRequired('This field is required.')
-        .minLength(8, 'Password must be at least 8 characters long.'),
-    repeatPassword: StringType()
-        .isRequired('This field is required.')
-        .minLength(8, 'Password must be at least 8 characters long.')
-        .addRule((value, data) => {
-            if (value !== data.password) {
-                return false
-            }
-            return true
-        }, 'Passwords do not match.')
+const SignUpModel = Yup.object().shape({
+    name: Yup
+        .string()
+        .label('Name')
+        .required('This field is required.'),
+    email: Yup
+        .string()
+        .label('Email')
+        .required('This field is required.')
+        .email('Please enter a valid email address.'),
+    password: Yup
+        .string()
+        .label('Password')
+        .required('This field is required.')
+        .min(8, 'Password must be at least 8 characters long.'),
+    repeatPassword: Yup
+        .string()
+        .label('Repeat password')
+        .required('This field is required.')
+        .min(8, 'Password must be at least 8 characters long.')
+        .when('password', {
+            is: value => (value && value.length > 0 ? true : false),
+            then: Yup.string().oneOf(
+                [Yup.ref('password')],
+                'Passwords do not match.'
+            )
+        })
 })
-const VerifyCodeModel = Schema.Model({
-    code: NumberType()
-        .isRequired('This field is required.')
+const VerifyCodeModel = Yup.object().shape({
+    code: Yup
+        .string()
+        .label('Code')
+        .required('This field is required.')
         .max(6, 'The maximum character length is 6.')
         .min(6, 'The minimum character length is 6.')
 })
-const SignInModel = Schema.Model({
-    email: StringType()
-        .isRequired('This field is required.')
-        .isEmail('Email address format is incorrect.'),
-    password: StringType()
-        .isRequired('This field is required.')
-        .minLength(8, 'Password must be at least 8 characters long.')
+const SignInModel = Yup.object().shape({
+    email: Yup
+        .string()
+        .label('Email')
+        .required('This field is required.')
+        .email('Email address format is incorrect.'),
+    password: Yup
+        .string()
+        .label('Password')
+        .required('This field is required.')
+        .min(8, 'Password must be at least 8 characters long.')
 })
 
 export {
