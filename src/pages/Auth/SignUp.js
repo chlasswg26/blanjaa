@@ -1,11 +1,9 @@
+import { Center, Image, Text, Wrap, WrapItem } from '@chakra-ui/react'
 import { Fragment } from 'react'
-import { Radio } from 'antd'
 // import { useForm } from 'react-hook-form'
 // import { SignUpModel } from '../../utils/Schema'
 // import { yupResolver } from '@hookform/resolvers/yup'
 import Logo from '../../assets/images/logo.png'
-
-const { Group, Button } = Radio
 
 const SignUp = () => {
     // const { register, handleSubmit, errors } = useForm({
@@ -43,20 +41,33 @@ const SignUp = () => {
 
     return (
         <Fragment>
-            <img src={Logo} alt={process.env.REACT_APP_SITE_NAME} />
-            
-            <br />
-
-            <p style={{ fontWeight: 'bold' }}>
-                Please sign up with your account
-            </p>
-
-            <Group defaultValue='a' buttonStyle='solid'>
-                <Button value='a' style={{ color: 'red' }}>Hangzhou</Button>
-                <Button value='b'>Shanghai</Button>
-                <Button value='c'>Beijing</Button>
-                <Button value='d'>Chengdu</Button>
-            </Group>
+            <Wrap
+                spacing='1.5em'
+                direction='column'
+                align='center'
+                justify='center'
+                marginTop='5em'
+            >
+                    <WrapItem>
+                        <Center>
+                            <Image
+                                src={Logo}
+                                alt={process.env.REACT_APP_SITE_NAME}
+                            />
+                        </Center>
+                    </WrapItem>
+                
+                <WrapItem>
+                    <Center>
+                        <Text
+                            fontWeight='bold'
+                            fontSize={['sm', 'md', 'lg', 'xl']}
+                        >
+                            Please sign up with your account
+                        </Text>
+                    </Center>
+                </WrapItem>
+            </Wrap>
         </Fragment>
     )
 }
