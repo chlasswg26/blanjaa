@@ -10,6 +10,15 @@ const SignUpModel = Yup.object().shape({
         .label('Email')
         .required('This field is required.')
         .email('Please enter a valid email address.'),
+    phone: Yup
+        .string()
+        .label('Phone number')
+        .min(11, 'The minimum character length is 11')
+        .max(13, 'The maximum character length is 13'),
+    store: Yup
+        .string()
+        .label('Store name')
+        .nullable(true),
     password: Yup
         .string()
         .label('Password')

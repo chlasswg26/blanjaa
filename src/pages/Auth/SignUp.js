@@ -1,73 +1,73 @@
-import { Center, Image, Text, Wrap, WrapItem } from '@chakra-ui/react'
+import { Image, Tabs, TabList, Tab, Text, TabPanels, TabPanel, Box, Link, Alert, AlertIcon, AlertTitle, AlertDescription, CloseButton, useDisclosure } from '@chakra-ui/react'
 import { Fragment } from 'react'
-// import { useForm } from 'react-hook-form'
-// import { SignUpModel } from '../../utils/Schema'
-// import { yupResolver } from '@hookform/resolvers/yup'
 import Logo from '../../assets/images/logo.png'
+import { containerStyles, tabStyles, tabWrapStyles, textFirstStyles } from '../../assets/styles/Forms/SignUp'
+import Customer from '../../components/Forms/SignUp/Customer'
+import Seller from '../../components/Forms/SignUp/Seller'
 
 const SignUp = () => {
-    // const { register, handleSubmit, errors } = useForm({
-    //     resolver: yupResolver(SignUpModel)
-    // })
-
-    // const [name, setName] = useState()
-    // const [email, setEmail] = useState()
-    // const [password, setPassword] = useState()
-    // const [repeatPassword, setRepeatPassword] = useState()
-    // const [formValidation, setFormValidation] = useState()
-
-    // const handleChange = event => {
-    //     event.preventDefault()
-
-    //     const { name, value } = event.target
-
-    //     switch (name) {
-    //         case 'name':
-    //             setName(value)
-    //             break
-    //         case 'email':
-    //             setEmail(value)
-    //             break
-    //         case 'password':
-    //             setPassword(value)
-    //             break
-    //         case 'repeatPassword':
-    //             setRepeatPassword(value)
-    //             break
-    //         default:
-    //             break
-    //     }
-    // }
+    const { isOpen, onOpen } = useDisclosure()
 
     return (
         <Fragment>
-            <Wrap
-                spacing='1.5em'
-                direction='column'
-                align='center'
-                justify='center'
-                marginTop='5em'
-            >
-                    <WrapItem>
-                        <Center>
-                            <Image
-                                src={Logo}
-                                alt={process.env.REACT_APP_SITE_NAME}
-                            />
-                        </Center>
-                    </WrapItem>
-                
-                <WrapItem>
-                    <Center>
-                        <Text
-                            fontWeight='bold'
-                            fontSize={['sm', 'md', 'lg', 'xl']}
+            <Box {...containerStyles}>
+                <Image
+                    src={Logo}
+                    alt={process.env.REACT_APP_SITE_NAME}
+                    fallbackSrc='https://via.placeholder.com/160x70'
+                />
+                    
+                <Text {...textFirstStyles}>
+                    Please sign up with your account
+                </Text>
+
+                <Tabs {...tabWrapStyles}>
+                    <TabList mb='4rem'>
+                        <Tab
+                            {...tabStyles}
+                            borderRightColor='transparent'
                         >
-                            Please sign up with your account
-                        </Text>
-                    </Center>
-                </WrapItem>
-            </Wrap>
+                            Customer
+                        </Tab>
+                        <Tab
+                            {...tabStyles}
+                            borderLeftColor='transparent'
+                        >
+                            Seller
+                        </Tab>
+                    </TabList>
+
+                    { !isOpen && (
+                        <Alert status="error" onClick={onOpen}>
+                            <AlertIcon />
+                            <AlertTitle mr={2}>Your browser is outdated!</AlertTitle>
+                            <AlertDescription>Your Chakra experience may be degraded.</AlertDescription>
+                            <CloseButton position="absolute" right="8px" top="8px" />
+                        </Alert>
+                    ) }
+
+                    <TabPanels>
+                        <TabPanel>
+                            <Customer />
+                        </TabPanel>
+                        <TabPanel>
+                            <Seller />
+                        </TabPanel>
+                    </TabPanels>
+                </Tabs>
+
+                <Text
+                    fontSize='md'
+                    mt='3rem'
+                >
+                    Already have a { process.env.REACT_APP_SITE_NAME } account?
+                    <Link
+                        href='/auth/signin'
+                        color='#DB3022'
+                        children=' Login'
+                    />
+                </Text>
+            </Box>
         </Fragment>
     )
 }
