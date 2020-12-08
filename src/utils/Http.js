@@ -15,7 +15,7 @@ const RegisterUser = body => {
     return Axios.post(`${AUTH_ENDPOINT}/register`, body)
 }
 const VerifyUser = body => {
-    return Axios.post(`${AUTH_ENDPOINT}/verify`, body)
+    return Axios.put(`${AUTH_ENDPOINT}/verify`, body)
 }
 const LoginUser = body => {
     return Axios.post(`${AUTH_ENDPOINT}/login`, body)

@@ -12,7 +12,6 @@ const textFirstStyles = {
 }
 const textSecondStyles = {
     fontSize: 'md',
-    mt: '3rem',
     color: 'orange.500',
     fontWeight: '500'
 }

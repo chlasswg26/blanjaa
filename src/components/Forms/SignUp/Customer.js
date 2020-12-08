@@ -1,10 +1,14 @@
 import { Button, Center, CircularProgress, FormControl, FormErrorMessage, Input, InputGroup, InputRightElement, Stack } from '@chakra-ui/react'
-import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { SignUpModel } from '../../../utils/Schema'
 import { buttonFirstStyles, circularProgress } from '../../../assets/styles/Forms/Components/SignUp/Customer'
 import { CheckIcon, CloseIcon } from '@chakra-ui/icons'
+import { useDispatch, useSelector } from 'react-redux'
+import { RegisterActionCreator } from '../../../redux/actions/auth'
+import qs from 'querystring'
+import { useHistory } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 const fields = [
     {
@@ -33,39 +37,15 @@ const Customer = () => {
     const { register, errors, handleSubmit, formState } = useForm({
         resolver: yupResolver(SignUpModel)
     })
-    const [name, setName] = useState()
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
-    const [repeatPassword, setRepeatPassword] = useState()
     const {
         dirtyFields,
         touched,
         isSubmitSuccessful
     } = formState
-
-    console.log(name, email, password, repeatPassword)
-
-    const handleChange = event => {
-        event.preventDefault()
-        const { name, value } = event.target
-
-        switch (name) {
-            case 'name':
-                setName(value)
-                break
-            case 'email':
-                setEmail(value)
-                break
-            case 'password':
-                setPassword(value)
-                break
-            case 'repeatPassword':
-                setRepeatPassword(value)
-                break
-            default:
-                break
-        }
-    }
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const auth = useSelector(state => state.Auth)
+    const [emailOnSubmit, setEmailOnSubmit] = useState()
 
     const checkSecondIcon = (error, state, id) => {
         const {
@@ -91,7 +71,30 @@ const Customer = () => {
         }
     }
 
-    const onSubmit = () => console.log('test')
+    const onSubmit = value => {
+        delete value.repeatPassword
+        dispatch(
+            RegisterActionCreator(
+                qs.stringify(value)
+            )
+        )
+        setEmailOnSubmit(value.email)
+    }
+
+    useEffect(() => {
+        if (auth.isFulfilled) {
+            history.push(
+                '/auth/verify',
+                {
+                    guestEmail: emailOnSubmit
+                }
+            )
+        }
+    }, [
+        auth,
+        emailOnSubmit,
+        history
+    ])
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -107,7 +110,6 @@ const Customer = () => {
                                 type={field.type}
                                 name={field.name}
                                 placeholder={field.placeholder}
-                                onChange={(event) => handleChange(event)}
                                 focusBorderColor='#DB3022'
                                 ref={register}
                             />
@@ -132,7 +134,11 @@ const Customer = () => {
             }) }
 
             <Center>
-                <Button {...buttonFirstStyles}>
+                <Button
+                    {...buttonFirstStyles}
+                    loadingText='Submitting'
+                    isLoading={auth.isLoading}
+                >
                     Submit
                 </Button>
             </Center>

@@ -1,12 +1,13 @@
-import { Image, Tabs, TabList, Tab, Text, TabPanels, TabPanel, Box, Link, Alert, AlertIcon, AlertTitle, AlertDescription, CloseButton, useDisclosure } from '@chakra-ui/react'
+import { Image, Tabs, TabList, Tab, Text, TabPanels, TabPanel, Box, Link, Alert, AlertIcon, AlertTitle, AlertDescription, Spacer, Center } from '@chakra-ui/react'
 import { Fragment } from 'react'
+import { useSelector } from 'react-redux'
 import Logo from '../../assets/images/logo.png'
 import { containerStyles, tabStyles, tabWrapStyles, textFirstStyles } from '../../assets/styles/Forms/SignUp'
 import Customer from '../../components/Forms/SignUp/Customer'
 import Seller from '../../components/Forms/SignUp/Seller'
 
 const SignUp = () => {
-    const { isOpen, onOpen } = useDisclosure()
+    const auth = useSelector(state => state.Auth)
 
     return (
         <Fragment>
@@ -37,13 +38,43 @@ const SignUp = () => {
                         </Tab>
                     </TabList>
 
-                    { !isOpen && (
-                        <Alert status="error" onClick={onOpen}>
-                            <AlertIcon />
-                            <AlertTitle mr={2}>Your browser is outdated!</AlertTitle>
-                            <AlertDescription>Your Chakra experience may be degraded.</AlertDescription>
-                            <CloseButton position="absolute" right="8px" top="8px" />
-                        </Alert>
+                    { auth.isRejected && (
+                        <Fragment>
+                            <Spacer mt='3rem' />
+                            <Center>
+                                <Alert
+                                    status={(auth.response.status === 500 ? 'error' : 'warning')}
+                                >
+                                    <AlertIcon />
+                                    <AlertTitle mr={2}>
+                                        { auth.response.status === 500 ? 'Server error:' : 'Something error:' }
+                                    </AlertTitle>
+                                    <AlertDescription>
+                                        { auth.errorMessage }
+                                    </AlertDescription>
+                                </Alert>
+                            </Center>
+                        </Fragment>
+                    ) }
+
+                    { auth.isFulfilled && (
+                        <Fragment>
+                            <Spacer mt='3rem' />
+
+                            <Center>
+                                <Alert
+                                    status='success'
+                                >
+                                    <AlertIcon />
+                                    <AlertTitle mr={2}>
+                                        Well done!
+                                    </AlertTitle>
+                                    <AlertDescription>
+                                        Redirecting...
+                                    </AlertDescription>
+                                </Alert>
+                            </Center>
+                        </Fragment>
                     ) }
 
                     <TabPanels>

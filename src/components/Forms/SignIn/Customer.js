@@ -1,5 +1,4 @@
 import { Button, Center, CircularProgress, FormControl, FormErrorMessage, Input, InputGroup, InputRightElement, Stack, useDisclosure } from '@chakra-ui/react'
-import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { SignInModel } from '../../../utils/Schema'
@@ -24,8 +23,6 @@ const Customer = () => {
     const { register, errors, handleSubmit, formState } = useForm({
         resolver: yupResolver(SignInModel)
     })
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const {
         dirtyFields,
@@ -33,23 +30,6 @@ const Customer = () => {
         isSubmitSuccessful
     } = formState
 
-    console.log(name, email, password)
-
-    const handleChange = event => {
-        event.preventDefault()
-        const { name, value } = event.target
-
-        switch (name) {
-            case 'email':
-                setEmail(value)
-                break
-            case 'password':
-                setPassword(value)
-                break
-            default:
-                break
-        }
-    }
 
     const checkType = (type, show) => {
         switch (type) {
@@ -115,7 +95,10 @@ const Customer = () => {
         }
     }
 
-    const onSubmit = () => console.log('test')
+    const onSubmit = value => {
+        delete value.repeatPassword
+        console.log('test:', value)
+    }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -131,7 +114,6 @@ const Customer = () => {
                                 type={checkType(field.type, isOpen)}
                                 name={field.name}
                                 placeholder={field.placeholder}
-                                onChange={(event) => handleChange(event)}
                                 focusBorderColor='#DB3022'
                                 ref={register}
                             />

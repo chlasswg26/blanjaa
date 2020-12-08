@@ -39,7 +39,8 @@ const Auth = (prevState = initialValue, action) => {
                 ...prevState,
                 isLoading: false,
                 isRejected: false,
-                isFulfilled: true
+                isFulfilled: true,
+                response: action.payload.data.data
             }
         case VerifyAction + pending:
             return {
@@ -61,7 +62,8 @@ const Auth = (prevState = initialValue, action) => {
                 ...prevState,
                 isLoading: false,
                 isRejected: false,
-                isFulfilled: true
+                isFulfilled: true,
+                response: action.payload.data.data
             }
         case LoginAction + pending:
             return {
