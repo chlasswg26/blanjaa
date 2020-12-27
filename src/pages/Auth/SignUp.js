@@ -1,6 +1,7 @@
 import { Image, Tabs, TabList, Tab, Text, TabPanels, TabPanel, Box, Link, Alert, AlertIcon, AlertTitle, AlertDescription, Spacer, Center } from '@chakra-ui/react'
 import { Fragment } from 'react'
 import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import Logo from '../../assets/images/logo.png'
 import { containerStyles, tabStyles, tabWrapStyles, textFirstStyles } from '../../assets/styles/Forms/SignUp'
 import Customer from '../../components/Forms/SignUp/Customer'
@@ -8,6 +9,10 @@ import Seller from '../../components/Forms/SignUp/Seller'
 
 const SignUp = () => {
     const auth = useSelector(state => state.Auth)
+    const token = localStorage.getItem('token')
+    const history = useHistory()
+
+    token && history.replace('/')
 
     return (
         <Fragment>
@@ -23,7 +28,7 @@ const SignUp = () => {
                 </Text>
 
                 <Tabs {...tabWrapStyles}>
-                    <TabList mb='4rem'>
+                    <TabList mb='64px'>
                         <Tab
                             {...tabStyles}
                             borderRightColor='transparent'
@@ -40,7 +45,7 @@ const SignUp = () => {
 
                     { auth.isRejected && (
                         <Fragment>
-                            <Spacer mt='3rem' />
+                            <Spacer mt='48px' />
                             <Center>
                                 <Alert
                                     status={(auth.response.status === 500 ? 'error' : 'warning')}
@@ -59,12 +64,10 @@ const SignUp = () => {
 
                     { auth.isFulfilled && (
                         <Fragment>
-                            <Spacer mt='3rem' />
+                            <Spacer mt='48px' />
 
                             <Center>
-                                <Alert
-                                    status='success'
-                                >
+                                <Alert status='success'>
                                     <AlertIcon />
                                     <AlertTitle mr={2}>
                                         Well done!
@@ -89,7 +92,7 @@ const SignUp = () => {
 
                 <Text
                     fontSize='md'
-                    mt='3rem'
+                    mt='48px'
                 >
                     Already have a { process.env.REACT_APP_SITE_NAME } account?
                     <Link

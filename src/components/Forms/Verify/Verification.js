@@ -40,7 +40,11 @@ const Verification = () => {
 
     useEffect(() => {
         if (verify.isFulfilled) {
-            history.replace('/auth/signin')
+            localStorage.removeItem('guestEmail')
+            
+            history.push('/auth/signin', {
+                message: verify.response.message
+            })
         }
     }, [
         verify,
@@ -71,7 +75,7 @@ const Verification = () => {
             
             <Text
                 color='crimson'
-                mt='1rem'
+                mt='16px'
             >
                 { error && error }
             </Text>

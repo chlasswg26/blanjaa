@@ -121,7 +121,7 @@ const Seller = () => {
                         key={fieldIndex}
                         isInvalid={errors[field.name]}
                     >
-                        <InputGroup mb='0.8rem'>
+                        <InputGroup mb='12.8px'>
                             <Input
                                 type={field.type}
                                 name={field.name}
@@ -140,8 +140,8 @@ const Seller = () => {
                                 ) }
                         </InputGroup>
                         <FormErrorMessage
-                            mt='-0.8rem'
-                            mb='2rem'
+                            mt='-12.8px'
+                            mb='32px'
                         >
                             { errors[field.name]?.message }
                         </FormErrorMessage>

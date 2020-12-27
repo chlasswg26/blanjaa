@@ -1,22 +1,22 @@
 const containerStyles = {
-    minH: '40em',
-    spacing: '3em',
+    minH: '640px',
+    spacing: '48px',
     direction: 'column',
     align: 'center',
-    marginTop: '5em'
+    marginTop: '80px'
 }
 const textFirstStyles = {
     fontWeight: 'bold',
     fontSize: ['sm', 'md', 'lg', 'xl'],
-    marginTop: '2rem'
+    marginTop: '32px'
 }
 const tabWrapStyles = {
     variant: 'unstyled',
-    marginTop: '3rem',
+    marginTop: '48px',
     borderWidth: '1px',
     borderRadius: '3px',
     align: 'center',
-    maxW: '40em',
+    maxW: '640px',
     borderColor: 'transparent',
     isLazy: true
 }

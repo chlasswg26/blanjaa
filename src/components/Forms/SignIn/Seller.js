@@ -1,8 +1,8 @@
-import { Button, Center, CircularProgress, FormControl, FormErrorMessage, Input, InputGroup, InputRightElement, Stack, useDisclosure } from '@chakra-ui/react'
+import { Button, Center, CircularProgress, FormControl, FormErrorMessage, IconButton, Input, InputGroup, InputRightElement, Stack, useDisclosure } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { SignInModel } from '../../../utils/Schema'
-import { buttonFirstStyles, circularProgress } from '../../../assets/styles/Forms/Components/SignIn/Seller'
+import { buttonFirstStyles, buttonSecondStyles, circularProgress } from '../../../assets/styles/Forms/Components/SignIn/Seller'
 import { CheckIcon, CloseIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
 const fields = [
@@ -58,7 +58,7 @@ const Seller = () => {
                 ||
                 (dirtyFields[id] && touched[id] && isSubmitSuccessful)
             ) {
-                return '4rem'
+                return '64px'
             }
         }
     }
@@ -109,7 +109,7 @@ const Seller = () => {
                         key={fieldIndex}
                         isInvalid={errors[field.name]}
                     >
-                        <InputGroup mb='0.8rem'>
+                        <InputGroup mb='12.8px'>
                             <Input
                                 type={checkType(field.type, isOpen)}
                                 name={field.name}
@@ -118,15 +118,14 @@ const Seller = () => {
                                 ref={register}
                             />
                             { (field.type === 'password' && field.control) && (
-                                <InputRightElement width='2.7rem'>
-                                    <Button
-                                        h='1.8rem'
-                                        size='sm'
+                                <InputRightElement w='43.2px'>
+                                    <IconButton
+                                        {...buttonFirstStyles}
+                                        aria-label='Control Type'
                                         onClick={isOpen ? onClose : onOpen}
                                         marginRight={checkMarginButton(errors, formState, field.name)}
-                                    >
-                                        { checkFirstIcon(isOpen) }
-                                    </Button>
+                                        icon={checkFirstIcon(isOpen)}
+                                    />
                                 </InputRightElement>
                             )}
                             { (
@@ -140,8 +139,8 @@ const Seller = () => {
                                 )}
                         </InputGroup>
                         <FormErrorMessage
-                            mt='-0.8rem'
-                            mb='2rem'
+                            mt='-12.8px'
+                            mb='32px'
                         >
                             { errors[field.name]?.message }
                         </FormErrorMessage>
@@ -150,7 +149,7 @@ const Seller = () => {
             }) }
 
             <Center>
-                <Button {...buttonFirstStyles}>
+                <Button {...buttonSecondStyles}>
                     Submit
                 </Button>
             </Center>

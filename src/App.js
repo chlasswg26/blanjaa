@@ -9,7 +9,7 @@ import { PersistGate } from 'redux-persist/es/integration/react'
 
 import { store, persistor } from './redux/store'
 
-// import Dashboard from './pages/Dashboard'
+import Dashboard from './pages/Dashboard'
 import SignUp from './pages/Auth/SignUp'
 import SignIn from './pages/Auth/SignIn'
 import Verify from './pages/Auth/Verify'
@@ -24,9 +24,9 @@ const App = () => {
                 <ChakraProvider>
                     <Router forceRefresh={true}>
                         <Switch>
-                            {/* <Route path='/' exact>
+                            <Route path='/' exact>
                                 <Dashboard />
-                            </Route> */}
+                            </Route>
                             <Route path='/auth/signup'>
                                 <SignUp />
                             </Route>
