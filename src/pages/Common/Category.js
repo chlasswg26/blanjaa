@@ -1,4 +1,4 @@
-import { Box, Flex, Image, Spacer, Text } from '@chakra-ui/react'
+import { Box, Flex, Image, Text } from '@chakra-ui/react'
 import { Fragment } from 'react'
 import GuestNavbar from '../../components/Navbar/GuestNavbar'
 import MetaElement from '../../components/MetaElement'
@@ -6,25 +6,25 @@ import Breadcrumbs from '../../components/Breadcrumbs'
 
 const element = {
     title: process.env.REACT_APP_SITE_NAME,
-    separator: ' | '
+    separator: ' - '
 }
 const mapping = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 const breadcrumbLists = [
     {
-        item: 'Search',
-        link: '/search'
+        item: 'Category',
+        link: '/category'
     },
     {
-        item: 'Baju lebaran warna hitam'
+        item: 'T-Shirt'
     }
 ]
 
-const Search = () => {
+const Category = () => {
     return (
         <Fragment>
             <MetaElement
                 {...element}
-                subtitle='Search'
+                subtitle='Category'
             />
             <GuestNavbar />
             <Box
@@ -46,33 +46,20 @@ const Search = () => {
                     }}
                 />
                 <Text
-                    display='inline-block'
+                    as='h5'
                     fontStyle='normal'
-                    fontWeight='1000'
-                    fontSize='20px'
-                    textColor='gray.500'
+                    fontWeight='700'
+                    fontSize='30px'
                     pl='17.5px'
                     pb='17.5px'
                 >
-                    Results for
-                </Text>
-                <Spacer
-                    display='inline-block'
-                    children='&nbsp;'
-                />
-                <Text
-                    display='inline-block'
-                    fontWeight='700'
-                    fontSize='18.5px'
-                    fontStyle='oblique'
-                >
-                    'Baju lebaran warna hitam'
+                    T-Shirt
                 </Text>
                 <Flex
                     flexDirection='row'
                     flexWrap='wrap'
                 >
-                    { mapping.map((_, index) => (
+                    {mapping.map((_, index) => (
                         <Box
                             key={index}
                             w='269.42px'
@@ -117,11 +104,11 @@ const Search = () => {
                                 </Box>
                             </Box>
                         </Box>
-                    )) }
+                    ))}
                 </Flex>
             </Box>
         </Fragment>
     )
 }
 
-export default Search
+export default Category

@@ -36,7 +36,6 @@ const Checkout = () => {
                     >
                         Checkout
                     </Text>
-
                     <Box
                         as='h6'
                         size='sm'

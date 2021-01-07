@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 
 const MetaElement = (props) => {
     const {
@@ -14,7 +14,7 @@ const MetaElement = (props) => {
             defaultTitle='Title'
         >
             <title>{`${title}${separator}${subtitle}`}</title>
-            {...tag}
+            {tag}
         </Helmet>
     )
 }
