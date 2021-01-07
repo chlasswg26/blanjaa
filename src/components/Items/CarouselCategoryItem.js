@@ -27,6 +27,7 @@ const CarouselCategoryItem = () => {
                                     srcSet={image}
                                     boxSize='140px'
                                     rounded='10px'
+                                    crossOrigin='use-credentials'
                                 />
                                 <Text fontSize='lg'>
                                     Elektronik

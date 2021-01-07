@@ -46,7 +46,6 @@ const Category = () => {
                     }}
                 />
                 <Text
-                    as='h5'
                     fontStyle='normal'
                     fontWeight='700'
                     fontSize='30px'
