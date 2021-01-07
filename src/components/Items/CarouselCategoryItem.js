@@ -8,7 +8,7 @@ import { authenticate } from 'pixabay-api'
 const CarouselCategoryItem = () => {
     const [image, setImage] = useState()
     const { searchImages } = authenticate(process.env.REACT_APP_PIXABAYKEY)
-    searchImages('minuman')
+    searchImages('pakaian')
         .then((r) => setImage(r.hits[0].webformatURL))
 
     return (
@@ -25,10 +25,10 @@ const CarouselCategoryItem = () => {
                             >
                                 <Image
                                     srcSet={image}
-                                    boxSize='180px'
+                                    boxSize='140px'
                                     rounded='10px'
                                 />
-                                <Text fontSize='2xl'>
+                                <Text fontSize='lg'>
                                     Elektronik
                                 </Text>
                             </Stack>

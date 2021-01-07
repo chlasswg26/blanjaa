@@ -7,12 +7,13 @@ const color = randomColor({
 
 const CenterBoxStyles = {
     bg: color,
-    w: '260px',
-    h: '280px',
+    w: '180px',
+    h: '200px',
     textColor: 'white',
     fontStyle: 'oblique',
     fontWeight: 'bold',
-    rounded: '10px'
+    rounded: '10px',
+    p: '10px'
 }
 
 export {

@@ -77,6 +77,130 @@ const stackStyles = {
     spacing: 7,
     ml: '40px'
 }
+const modalStyles = {
+    blockScrollOnMount: false,
+    closeOnOverlayClick: false,
+    motionPreset: 'slideInBottom',
+    scrollBehavior: 'inside',
+    isCentered: true
+}
+const flexFirstStyles = {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    boxShadow: 'md'
+}
+const closeButtonStyles = {
+    size: 'lg',
+    p: '30px',
+    color: 'gray.500',
+    _active: {
+        bg: 'transparent',
+        color: '#DB3022',
+        borderColor: '#DB3022'
+    },
+    _focus: {
+        boxShadow: false
+    }
+}
+const textFirstStyles = {
+    fontSize: 'lg',
+    fontStyle: 'normal',
+    fontWeight: 'bold',
+    m: '15px',
+    ml: '5px'
+}
+const textSecondStyles = {
+    fontStyle: 'normal',
+    fontWeight: '750',
+    fontSize: '18.5px',
+    pb: '30px'
+}
+const buttonFirstStyles = {
+    variant: 'outline',
+    rounded: '10px',
+    w: '100px',
+    bg: '#DB3022',
+    textColor: 'white',
+    borderColor: '#DB3022',
+    m: '1',
+    _hover: {
+        bg: 'transparent',
+        color: '#DB3022',
+        borderColor: '#DB3022'
+    },
+    _active: {
+        bg: 'transparent',
+        color: '#DB3022',
+        borderColor: '#DB3022'
+    },
+    _focus: {
+        boxShadow: false
+    }
+}
+const buttonSecondStyles = {
+    variant: 'outline',
+    rounded: '10px',
+    w: '100px',
+    bg: 'transparent',
+    textColor: 'black',
+    borderColor: 'darkgrey',
+    m: '1',
+    _hover: {
+        bg: 'transparent',
+        color: '#DB3022',
+        borderColor: '#DB3022'
+    },
+    _active: {
+        bg: 'transparent',
+        color: '#DB3022',
+        borderColor: '#DB3022'
+    },
+    _focus: {
+        boxShadow: false
+    }
+}
+const buttonThirdStyles = {
+    variant: 'outline',
+    rounded: '32px',
+    w: '175px',
+    bg: 'transparent',
+    textColor: 'black',
+    borderColor: 'black',
+    _hover: {
+        bg: 'transparent',
+        color: '#DB3022',
+        borderColor: '#DB3022'
+    },
+    _active: {
+        bg: 'transparent',
+        color: '#DB3022',
+        borderColor: '#DB3022'
+    },
+    _focus: {
+        boxShadow: false
+    }
+}
+const buttonFourthStyles = {
+    variant: 'outline',
+    rounded: '32px',
+    w: '175px',
+    bg: '#DB3022',
+    textColor: 'white',
+    borderColor: '#DB3022',
+    _hover: {
+        bg: 'transparent',
+        color: '#DB3022',
+        borderColor: '#DB3022'
+    },
+    _active: {
+        bg: 'transparent',
+        color: '#DB3022',
+        borderColor: '#DB3022'
+    },
+    _focus: {
+        boxShadow: false
+    }
+}
 
 export {
     horizontalStackStyles,
@@ -84,5 +208,14 @@ export {
     iconButtonFirstStyles,
     iconButtonSecondStyles,
     iconButtonThirdStyles,
-    stackStyles
+    stackStyles,
+    modalStyles,
+    flexFirstStyles,
+    closeButtonStyles,
+    textFirstStyles,
+    textSecondStyles,
+    buttonFirstStyles,
+    buttonSecondStyles,
+    buttonThirdStyles,
+    buttonFourthStyles
 }

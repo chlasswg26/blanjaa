@@ -63,7 +63,17 @@ const buttonFirstStyles = {
     _focus: {
         boxShadow: false
     },
-    bg: '#DB3022'
+    bg: '#DB3022',
+    m: '2px'
+}
+const buttonSecondStyles = {
+    size: 'xs',
+    rounded: '20px',
+    _focus: {
+        boxShadow: false
+    },
+    bg: '#A0AEC0',
+    m: '2px'
 }
 
 export {
@@ -72,5 +82,6 @@ export {
     textSecondStyles,
     iconButtonFirstStyles,
     iconButtonSecondStyles,
-    buttonFirstStyles
+    buttonFirstStyles,
+    buttonSecondStyles
 }
