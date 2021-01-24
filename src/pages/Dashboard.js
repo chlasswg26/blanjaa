@@ -3,15 +3,20 @@ import { Fragment } from 'react'
 import { horizontalStackStyles, textFirstStyles, textSecondStyles, boxFirstStyles, boxSecondStyles, boxThirdStyles, boxFourthStyles } from '../assets/styles/Dashboard'
 import CarouselCategory from '../components/CarouselCategory'
 import GuestNavbar from '../components/Navbar/GuestNavbar'
-// import UserNavbar from '../components/Navbar/UserNavbar'
+import UserNavbar from '../components/Navbar/UserNavbar'
 
 const mapping = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
 const Dashboard = () => {
+    const storage = JSON.parse(localStorage.getItem('storage'))
+
     return (
         <Fragment>
-            <GuestNavbar />
-            {/* <UserNavbar /> */}
+            { storage?.accessToken ? (
+                <UserNavbar />
+            ) : (
+                <GuestNavbar />
+            ) }
             <CarouselCategory />
             <HStack {...horizontalStackStyles}>
                 <Stack

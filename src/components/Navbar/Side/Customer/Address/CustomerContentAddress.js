@@ -289,16 +289,12 @@ const CustomerContentAddress = () => {
                                 </Box>
                             </Stack>
                             <Checkbox
+                                colorScheme='red'
                                 top='20px'
                                 color='gray.500'
                                 fontWeight='300'
                                 borderColor='darkgrey'
                                 _hover={{
-                                    bg: 'transparent',
-                                    color: '#DB3022',
-                                    boxShadow: false
-                                }}
-                                _active={{
                                     bg: 'transparent',
                                     color: '#DB3022'
                                 }}

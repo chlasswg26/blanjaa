@@ -62,6 +62,12 @@ const PostHistoryAction = 'POST_HISTORY'
 const PutHistoryAction = 'PUT_HISTORY'
 const DeleteHistoryAction = 'DELETE_HISTORY'
 
+const GuestAddToCart = 'ADD_TO_CART'
+const GuestRemoveFromCart = 'REMOVE_FROM_CART'
+const GuestAddQuantityToCart = 'ADD_QUANTITY'
+const GuestSubQuantityToCart = 'SUB_QUANTITY'
+const GuestEmptyCart = 'EMPTY_CART'
+
 export {
     pending,
     rejected,
@@ -125,5 +131,11 @@ export {
     GetHistoryByCustomerAction,
     PostHistoryAction,
     PutHistoryAction,
-    DeleteHistoryAction
+    DeleteHistoryAction,
+
+    GuestAddToCart,
+    GuestRemoveFromCart,
+    GuestAddQuantityToCart,
+    GuestSubQuantityToCart,
+    GuestEmptyCart
 }

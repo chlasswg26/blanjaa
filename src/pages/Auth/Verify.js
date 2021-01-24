@@ -1,20 +1,21 @@
 import { Image, Text, Box, Link, Center, Spacer, Alert, AlertIcon, AlertTitle, AlertDescription, Wrap, WrapItem } from '@chakra-ui/react'
 import { Fragment } from 'react'
 import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import Logo from '../../assets/images/logo.png'
 import { containerStyles, textFirstStyles, textSecondStyles, wrapperStyles } from '../../assets/styles/Forms/Verify'
 import Verification from '../../components/Forms/Verify/Verification'
 
 const Verify = () => {
-    const verify = useSelector(state => state.Verify)
     const auth = useSelector(state => state.Auth)
-    const token = localStorage.getItem('token')
-    const email = localStorage.getItem('guestEmail')
+    const verify = useSelector(state => state.Verify)
+    const { state } = useLocation()
+    const storage = JSON.parse(localStorage.getItem('storage'))
     const history = useHistory()
     
-    token && history.replace('/')
-    !email && history.replace('/auth/signup')
+    !state?.guestEmail && history.replace('/auth/signup')
+    state?.guestEmail && !verify?.register?.response?.preview && history.replace('/auth/signup')
+    storage?.accessToken && history.replace('/')
 
     return (
         <Fragment>
@@ -31,43 +32,43 @@ const Verify = () => {
 
                 <Wrap {...wrapperStyles}>
                     <WrapItem>
-                        { auth.isRejected && (
+                        { auth?.verify?.isRejected && (
                             <Alert
-                                status={(auth.response.status === 500 ? 'error' : 'warning')}
+                                status={(auth?.verify?.response?.status === 500 ? 'error' : 'warning')}
                             >
                                 <AlertIcon />
                                 <AlertTitle mr={2}>
-                                    { auth.response.status === 500 ? 'Server error:' : 'Something error:' }
+                                    { auth?.verify?.response?.status === 500 ? 'Server error:' : 'Something error:' }
                                 </AlertTitle>
                                 <AlertDescription>
-                                    { auth.errorMessage }
+                                    { auth?.verify?.errorMessage }
                                 </AlertDescription>
                             </Alert>
                         ) }
                     </WrapItem>
 
                     <WrapItem>
-                        { verify.isFulfilled && (
+                        { auth?.verify?.isFulfilled && (
                             <Alert status='success'>
                                 <AlertIcon />
                                 <AlertTitle mr={2}>
                                     Well done!
                                 </AlertTitle>
                                 <AlertDescription>
-                                    { verify.response.message }
+                                    { auth?.verify?.response?.message }
                                 </AlertDescription>
                             </Alert>
                         ) }
                     </WrapItem>
                 </Wrap>
 
-                { verify.response.preview && (
+                { verify?.register?.response?.preview && (
                     <Fragment>
                         <Spacer mt='48px' />
 
                         <Center>
                             <Link
-                                href={verify.response.preview}
+                                href={verify?.register?.response?.preview}
                                 target='_blank'
                             >
                                 <Text {...textSecondStyles}>

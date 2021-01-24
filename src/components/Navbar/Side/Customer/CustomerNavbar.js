@@ -9,24 +9,25 @@ const fieldListOfLink = [
         name: 'My account',
         icon: <FiUser size='18px' />,
         iconBackground: 'blue.500',
-        pathTo: '/user/profile'
+        pathTo: '/customer/profile'
     },
     {
         name: 'Shipping Address',
         icon: <IoLocationOutline size='18px' />,
         iconBackground: '#F36F45',
-        pathTo: '/user/address'
+        pathTo: '/customer/address'
     },
     {
         name: 'My order',
         icon: <IoClipboardOutline size='18px' />,
         iconBackground: '#F3456F',
-        pathTo: '/user/orders'
+        pathTo: '/customer/orders'
     }
 ]
 
 const CustomerNavbar = () => {
     const location = useLocation()
+    const storage = JSON.parse(localStorage.getItem('storage'))
 
     return (
         <Box
@@ -42,8 +43,8 @@ const CustomerNavbar = () => {
                 pl='85.5px'
             >
                 <Avatar
-                    name='Avatar'
-                    src='https://google.com/'
+                    name={storage?.name}
+                    srcSet={`${process.env.REACT_APP_API_URL_IMAGE}${storage?.image}`}
                 />
                 <Stack
                     direction='column'
@@ -55,7 +56,7 @@ const CustomerNavbar = () => {
                         as='h5'
                         size='sm'
                     >
-                        Johanes Mikael
+                        {storage?.name}
                     </Heading>
                     <Flex
                         as='span'
@@ -78,6 +79,8 @@ const CustomerNavbar = () => {
                 pl='85.5px'
             >
                 { fieldListOfLink.map((field, fieldIndex) => {
+                    const activeLink = location.pathname === field.pathTo ? 'black' : 'gray.500'
+
                     return (
                         <ListItem key={fieldIndex}>
                             <Flex
@@ -100,10 +103,10 @@ const CustomerNavbar = () => {
                                         pt='5px'
                                         pl='15px'
                                         bg='transparent'
-                                        color={location.pathname === field.pathTo ? 'black' : 'gray.500'}
+                                        color={activeLink}
                                         _hover={{
                                             borderBottomColor: 'transparent',
-                                            color: `${location.pathname === field.pathTo ? 'black' : 'gray.500'}`,
+                                            color: `${activeLink}`,
                                             opacity: '0.5'
                                         }}
                                         _focus={{

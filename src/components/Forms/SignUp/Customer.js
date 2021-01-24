@@ -82,7 +82,7 @@ const Customer = () => {
     }
 
     useEffect(() => {
-        if (auth.isFulfilled) {
+        if (auth?.register?.isFulfilled) {
             history.push(
                 '/auth/verify',
                 {
@@ -137,7 +137,7 @@ const Customer = () => {
                 <Button
                     {...buttonFirstStyles}
                     loadingText='Submitting'
-                    isLoading={auth.isLoading}
+                    isLoading={auth?.register?.isLoading}
                 >
                     Submit
                 </Button>

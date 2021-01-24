@@ -1,12 +1,19 @@
 import { AddIcon, MinusIcon } from '@chakra-ui/icons'
 import { Box, Button, Checkbox, Flex, IconButton, Image, Stack, Text } from '@chakra-ui/react'
 import { Fragment } from 'react'
+import GuestNavbar from '../../components/Navbar/GuestNavbar'
 import UserNavbar from '../../components/Navbar/UserNavbar'
 
 const Cart = () => {
+    const storage = JSON.parse(localStorage.getItem('storage'))
+    
     return (
         <Fragment>
-            <UserNavbar />
+            { storage?.accessToken ? (
+                <UserNavbar />
+            ) : (
+                <GuestNavbar />
+            ) }
             <Box
                 py='3%'
                 px='6.5%'

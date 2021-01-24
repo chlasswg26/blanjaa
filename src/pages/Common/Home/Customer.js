@@ -5,22 +5,31 @@ import CustomerNavbar from '../../../components/Navbar/Side/Customer/CustomerNav
 import UserNavbar from '../../../components/Navbar/UserNavbar'
 import CustomerContentAddress from '../../../components/Navbar/Side/Customer/Address/CustomerContentAddress'
 import CustomerContentOrder from '../../../components/Navbar/Side/Customer/Orders/CustomerContentOrder'
+import { Fragment } from 'react'
+import MetaElement from '../../../components/MetaElement'
 
-const routes = [
+const listPath = [
     {
-        path: '/user/profile',
-        exact: true,
-        main: () => <CustomerContentProfile />
+        pathTo: '/customer/profile',
+        component: CustomerContentProfile,
+        subtitle: 'Customer Profile'
     },
     {
-        path: '/user/address',
-        main: () => <CustomerContentAddress />
+        pathTo: '/customer/address',
+        component: CustomerContentAddress,
+        subtitle: 'Customer Address'
     },
     {
-        path: '/user/orders',
-        main: () => <CustomerContentOrder />
+        pathTo: '/customer/orders',
+        component: CustomerContentOrder,
+        subtitle: 'Customer Orders'
     }
 ]
+
+const element = {
+    title: process.env.REACT_APP_SITE_NAME,
+    separator: ' - '
+}
 
 const Customer = () => {
     return (
@@ -34,14 +43,24 @@ const Customer = () => {
             >
                 <CustomerNavbar />
                 <Switch>
-                    {routes.map((route, index) => (
+                    <Route
+                        path='/customer'
+                        exact
+                    />
+                    { listPath.map((customerPath, customerPathIndex) => (
                         <Route
-                            key={index}
-                            path={route.path}
-                            exact={route.exact}
-                            children={<route.main />}
-                        />
-                    ))}
+                            key={customerPathIndex}
+                            path={customerPath.pathTo}
+                        >
+                            <Fragment>
+                                <MetaElement
+                                    {...element}
+                                    subtitle={customerPath.subtitle}
+                                />
+                                <customerPath.component />
+                            </Fragment>
+                        </Route>
+                    )) }
                 </Switch>
             </Flex>
         </Router>

@@ -10,7 +10,7 @@ const Verification = () => {
     const [error, setError] = useState(false)
     const dispatch = useDispatch()
     const { state } = useLocation()
-    const verify = useSelector(state => state.Verify)
+    const auth = useSelector(state => state.Auth)
     const history = useHistory()
 
     const handleChangePin = value => {
@@ -39,15 +39,14 @@ const Verification = () => {
     }
 
     useEffect(() => {
-        if (verify.isFulfilled) {
-            localStorage.removeItem('guestEmail')
-            
+        if (auth?.verify?.isFulfilled) {
             history.push('/auth/signin', {
-                message: verify.response.message
+                type: 'success',
+                message: auth?.verify?.response?.message
             })
         }
     }, [
-        verify,
+        auth,
         history
     ])
 

@@ -1,27 +1,94 @@
-import { Avatar, Box, Flex, Heading, List, ListItem, Stack, Text } from '@chakra-ui/react'
-import { FiUser } from 'react-icons/fi'
-import { IoClipboardOutline, IoLocationOutline } from 'react-icons/io5'
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Avatar, Box, Flex, Heading, List, ListItem, Stack, Text } from '@chakra-ui/react'
+import { FiHome, FiPackage, FiShoppingCart } from 'react-icons/fi'
+import { RiSecurePaymentFill } from 'react-icons/ri'
 import { MdModeEdit } from 'react-icons/md'
 import { Link, useLocation } from 'react-router-dom'
+import { BiSticker } from 'react-icons/bi'
 
 const fieldListOfLink = [
     {
-        name: 'My account',
-        icon: <FiUser size='18px' />,
+        parent: 'Store',
+        icon: <FiHome size='18px' />,
         iconBackground: 'blue.500',
-        pathTo: '/user/profile'
+        parentPath: '/seller/profile',
+        children: [
+            {
+                name: 'Store profile',
+                pathTo: '/seller/profile'
+            }
+        ]
     },
     {
-        name: 'Shipping Address',
-        icon: <IoLocationOutline size='18px' />,
+        parent: 'Product',
+        icon: <FiPackage size='18px' />,
         iconBackground: '#F36F45',
-        pathTo: '/user/address'
+        parentPath: '/seller/product',
+        children: [
+            {
+                name: 'Manage products',
+                pathTo: '/seller/product/inventory'
+            },
+            {
+                name: 'My products',
+                pathTo: '/seller/products'
+            },
+            {
+                name: 'Selling products',
+                pathTo: '/seller/product/new'
+            },
+            {
+                name: 'Category products',
+                pathTo: '/seller/product/category'
+            }
+        ]
     },
     {
-        name: 'My order',
-        icon: <IoClipboardOutline size='18px' />,
+        parent: 'Order',
+        icon: <FiShoppingCart size='18px' />,
         iconBackground: '#F3456F',
-        pathTo: '/user/orders'
+        parentPath: '/seller/order',
+        children: [
+            {
+                name: 'My order',
+                pathTo: '/seller/orders'
+            },
+            {
+                name: 'Order cancel',
+                pathTo: '/seller/order/cancel'
+            }
+        ]
+    },
+    {
+        parent: 'Payment',
+        icon: <RiSecurePaymentFill size='18px' />,
+        iconBackground: '#2DB554',
+        parentPath: '/seller/payment',
+        children: [
+            {
+                name: 'Manage payment',
+                pathTo: '/seller/payments'
+            },
+            {
+                name: 'New payment',
+                pathTo: '/seller/payment/new'
+            },
+        ]
+    },
+    {
+        parent: 'Banner',
+        icon: <BiSticker size='18px' />,
+        iconBackground: '#079FF7',
+        parentPath: '/seller/banner',
+        children: [
+            {
+                name: 'Manage banner',
+                pathTo: '/seller/banners'
+            },
+            {
+                name: 'New banner',
+                pathTo: '/seller/banner/new'
+            },
+        ]
     }
 ]
 
@@ -39,7 +106,7 @@ const SellerNavbar = () => {
                 flexDirection='row'
                 flexWrap='wrap'
                 pt='55.5px'
-                pl='85.5px'
+                pl='80px'
             >
                 <Avatar
                     name='Avatar'
@@ -72,52 +139,115 @@ const SellerNavbar = () => {
                     </Flex>
                 </Stack>
             </Flex>
-            <List
+            <Accordion
+                allowToggle
                 spacing={3}
                 pt='70px'
-                pl='85.5px'
+                pl='68px'
+                w='280px'
             >
-                { fieldListOfLink.map((field, fieldIndex) => {
+                {fieldListOfLink.map((parentField, parentFieldIndex) => {
+                    const activeToggle = (
+                        child = location.pathname,
+                        parent = parentField.parentPath
+                    ) => {
+                        const searchStringOfPath = child.indexOf(parent)
+                        
+                        if (searchStringOfPath != -1) return 'black'
+                        return 'gray.500'
+                    }
+
                     return (
-                        <ListItem key={fieldIndex}>
-                            <Flex
-                                flexWrap='wrap'
-                                flexDir='row'
-                                align='self-start'
+                        <AccordionItem
+                            key={parentFieldIndex}
+                            borderY='0'
+                            rounded='15px'
+                        >
+                            <AccordionButton
+                                _expanded={{
+                                    boxShadow: 'none'
+                                }}
+                                _active={{
+                                    boxShadow: 'none'
+                                }}
+                                _focus={{
+                                    boxShadow: 'none'
+                                }}
                             >
                                 <Box
-                                    bgColor={field.iconBackground}
+                                    bgColor={ parentField.iconBackground }
                                     color='white'
                                     rounded='17px'
                                     p='7px'
                                 >
-                                    { field.icon }
+                                    { parentField.icon }
                                 </Box>
-                                <Link to={field.pathTo}>
-                                    <Text
-                                        fontSize='12.5px'
-                                        fontWeight='600'
-                                        pt='5px'
-                                        pl='15px'
-                                        bg='transparent'
-                                        color={location.pathname === field.pathTo ? 'black' : 'gray.500'}
-                                        _hover={{
-                                            borderBottomColor: 'transparent',
-                                            color: `${location.pathname === field.pathTo ? 'black' : 'gray.500'}`,
-                                            opacity: '0.5'
-                                        }}
-                                        _focus={{
-                                            boxShadow: false
-                                        }}
-                                    >
-                                        { field.name }
-                                    </Text>
-                                </Link>
-                            </Flex>
-                        </ListItem>
+                                <Box
+                                    flex='1'
+                                    textAlign='left'
+                                    fontSize='12.5px'
+                                    fontWeight='600'
+                                    pt='5px'
+                                    pl='15px'
+                                    bg='transparent'
+                                    color={activeToggle()}
+                                    _hover={{
+                                        color: 'gray.500',
+                                        opacity: '0.5'
+                                    }}
+                                    _focus={{
+                                        boxShadow: false
+                                    }}
+                                >
+                                    { parentField.parent }
+                                </Box>
+                                <AccordionIcon color='gray.500' />
+                            </AccordionButton>
+                            <AccordionPanel pb={4}>
+                                <List
+                                    spacing={3}
+                                    pl='33px'
+                                >
+                                    { parentField.children.map((children, childrenIndex) => {
+                                        const activeLink = location.pathname === children.pathTo ? 'black' : 'gray.500'
+
+                                        return (
+                                            <ListItem key={childrenIndex}>
+                                                <Flex
+                                                    flexWrap='wrap'
+                                                    flexDir='row'
+                                                    align='self-start'
+                                                >
+                                                    <Link to={children.pathTo}>
+                                                        <Text
+                                                            fontSize='12.5px'
+                                                            fontWeight='600'
+                                                            pt='5px'
+                                                            pl='15px'
+                                                            bg='transparent'
+                                                            color={activeLink}
+                                                            _hover={{
+                                                                borderBottomColor: 'transparent',
+                                                                color: `${activeLink}`,
+                                                                opacity: '0.5'
+                                                            }}
+                                                            _focus={{
+                                                                boxShadow: false
+                                                            }}
+                                                        >
+                                                            {children.name}
+                                                        </Text>
+                                                    </Link>
+                                                </Flex>
+                                            </ListItem>
+                                        )
+                                    }) }
+                                </List>
+                            </AccordionPanel>
+                        </AccordionItem>
                     )
                 }) }
-            </List>
+            </Accordion>
         </Box>
     )
 }

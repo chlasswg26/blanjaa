@@ -83,13 +83,13 @@ const Seller = () => {
 
     const onSubmit = value => {
         delete value.repeatPassword
-        localStorage.setItem('guestEmail', value.email)
         dispatch(
             RegisterActionCreator(
                 qs.stringify(
                     {
                         ...value,
-                        seller: '2'
+                        seller: '2',
+                        role: '2'
                     }
                 )
             )
@@ -98,7 +98,7 @@ const Seller = () => {
     }
 
     useEffect(() => {
-        if (auth.isFulfilled) {
+        if (auth?.register?.isFulfilled) {
             history.push(
                 '/auth/verify',
                 {
@@ -153,7 +153,7 @@ const Seller = () => {
                 <Button
                     {...buttonFirstStyles}
                     loadingText='Submitting'
-                    isLoading={auth.isLoading}
+                    isLoading={auth?.register?.isLoading}
                 >
                     Submit
                 </Button>

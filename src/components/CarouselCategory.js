@@ -33,7 +33,7 @@ const CarouselCategory = () => {
 
     const slidePrev = () => setActiveIndex(activeIndex - 1)
     const slideNext = () => setActiveIndex(activeIndex + 1)
-    const onSlideChanged = (props) => setSlideInfo(props)
+    const onSlideChanged = props => setSlideInfo(props)
     
     return (
         <HStack {...horizontalStackStyles}>

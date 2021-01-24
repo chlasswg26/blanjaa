@@ -9,10 +9,10 @@ import Seller from '../../components/Forms/SignUp/Seller'
 
 const SignUp = () => {
     const auth = useSelector(state => state.Auth)
-    const token = localStorage.getItem('token')
+    const storage = JSON.parse(localStorage.getItem('storage'))
     const history = useHistory()
 
-    token && history.replace('/')
+    storage?.accessToken && history.replace('/')
 
     return (
         <Fragment>
@@ -43,26 +43,26 @@ const SignUp = () => {
                         </Tab>
                     </TabList>
 
-                    { auth.isRejected && (
+                    { auth?.register?.isRejected && (
                         <Fragment>
                             <Spacer mt='48px' />
                             <Center>
                                 <Alert
-                                    status={(auth.response.status === 500 ? 'error' : 'warning')}
+                                    status={(auth?.register?.response?.status === 500 ? 'error' : 'warning')}
                                 >
                                     <AlertIcon />
                                     <AlertTitle mr={2}>
-                                        { auth.response.status === 500 ? 'Server error:' : 'Something error:' }
+                                        { auth?.register?.response?.status === 500 ? 'Server error:' : 'Something error:' }
                                     </AlertTitle>
                                     <AlertDescription>
-                                        { auth.errorMessage }
+                                        { auth?.register?.errorMessage }
                                     </AlertDescription>
                                 </Alert>
                             </Center>
                         </Fragment>
                     ) }
 
-                    { auth.isFulfilled && (
+                    { auth?.register?.isFulfilled && (
                         <Fragment>
                             <Spacer mt='48px' />
 

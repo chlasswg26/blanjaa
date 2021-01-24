@@ -1,6 +1,15 @@
 import { Box, Flex, Heading, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
 import { Fragment } from 'react'
 
+const mappingTabs = [
+    'All items',
+    'Not yet paid',
+    'Packed',
+    'Sent',
+    'Completed',
+    'Order cancel'
+]
+
 const CustomerContentOrder = () => {
     return (
         <Fragment>
@@ -25,6 +34,7 @@ const CustomerContentOrder = () => {
                     <Flex
                         flexDirection='column'
                         flexWrap='wrap'
+                        pb='15px'
                         overflow='auto'
                         overflowWrap='anywhere'
                     >
@@ -38,27 +48,50 @@ const CustomerContentOrder = () => {
                         </Heading>
                     </Flex>
                     <Tabs
+                        align='center'
                         colorScheme='red'
                         boxShadow='0px'
                         borderColor='transparent'
-                        isFitted={true}
-                        isLazy={true}
+                        isFitted
+                        isLazy
                     >
                         <TabList>
-                            <Tab fontWeight='500'>All items</Tab>
-                            <Tab fontWeight='500'>Not yet paid</Tab>
-                            <Tab fontWeight='500'>Packed</Tab>
-                            <Tab fontWeight='500'>Sent</Tab>
-                            <Tab fontWeight='500'>Completed</Tab>
-                            <Tab fontWeight='500'>Order cancel</Tab>
+                            { mappingTabs.map((tab, tabIndex) => {
+                                return (
+                                    <Tab
+                                        key={tabIndex}
+                                        fontWeight='500'
+                                        color='gray.400'
+                                        borderColor='gray.400'
+                                        borderBottomWidth='1px'
+                                        _selected={{
+                                            color: '#DB3022',
+                                            bg: 'transparent',
+                                            borderColor: '#DB3022',
+                                            borderBottomWidth: '3.5px',
+                                            boxShadow: 'none'
+                                        }}
+                                        _active={{
+                                            color: '#DB3022',
+                                            bg: 'transparent',
+                                            borderColor: '#DB3022',
+                                            borderBottomWidth: '3.5px',
+                                            boxShadow: 'none'
+                                        }}
+                                    >
+                                        { tab }
+                                    </Tab>
+                                )
+                            }) }
                         </TabList>
                         <TabPanels>
-                            <TabPanel>Table 1</TabPanel>
-                            <TabPanel>Table 2</TabPanel>
-                            <TabPanel>Table 3</TabPanel>
-                            <TabPanel>Table 4</TabPanel>
-                            <TabPanel>Table 5</TabPanel>
-                            <TabPanel>Table 6</TabPanel>
+                            {mappingTabs.map((tab, tabPanelIndex) => {
+                                return (
+                                    <TabPanel key={tabPanelIndex}>
+                                        Tab {tab}
+                                    </TabPanel>
+                                )
+                            })}
                         </TabPanels>
                     </Tabs>
                 </Box>

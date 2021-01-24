@@ -4,6 +4,7 @@ import MetaElement from '../../components/MetaElement'
 import Breadcrumbs from '../../components/Breadcrumbs'
 import { Box, Button, Divider, Flex, IconButton, Image, Stack, Text } from '@chakra-ui/react'
 import { AddIcon, MinusIcon } from '@chakra-ui/icons'
+import UserNavbar from '../../components/Navbar/UserNavbar'
 
 const element = {
     title: process.env.REACT_APP_SITE_NAME,
@@ -21,13 +22,19 @@ const breadcrumbLists = [
 const mapping = [1, 2, 3, 4]
 
 const Product = () => {
+    const storage = JSON.parse(localStorage.getItem('storage'))
+
     return (
         <Fragment>
             <MetaElement
                 {...element}
                 subtitle='Category'
             />
-            <GuestNavbar />
+            { storage?.accessToken ? (
+                <UserNavbar />
+            ) : (
+                <GuestNavbar />
+            ) }
             <Box
                 py='3.5%'
                 px='6.5%'
@@ -215,7 +222,7 @@ const Product = () => {
                 </Flex>
                 <Stack
                     spacing={10}
-                    pb='70px'
+                    pb='60px'
                 >
                     <Text
                         fontStyle='normal'
@@ -261,8 +268,8 @@ const Product = () => {
                     fontStyle='normal'
                     fontWeight='700'
                     fontSize='30px'
-                    pt='70px'
-                    pb='15px'
+                    pt='50px'
+                    pb='25px'
                 >
                     You can also like this
                         <Text

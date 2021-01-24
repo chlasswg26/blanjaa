@@ -9,12 +9,34 @@ import {
 } from '../actions/actionTypes'
 
 const initialValue = {
-    response: {},
-    token: '',
-    isLoading: false,
-    isRejected: false,
-    isFulfilled: false,
-    errorMessage: ''
+    register: {
+        response: {},
+        isLoading: false,
+        isRejected: false,
+        isFulfilled: false,
+        errorMessage: ''
+    },
+    login: {
+        response: {},
+        isLoading: false,
+        isRejected: false,
+        isFulfilled: false,
+        errorMessage: ''
+    },
+    verify: {
+        response: {},
+        isLoading: false,
+        isRejected: false,
+        isFulfilled: false,
+        errorMessage: ''
+    },
+    token: {
+        response: '',
+        isLoading: false,
+        isRejected: false,
+        isFulfilled: false,
+        errorMessage: ''
+    }
 }
 
 const Auth = (prevState = initialValue, action) => {
@@ -22,94 +44,118 @@ const Auth = (prevState = initialValue, action) => {
         case RegisterAction + pending:
             return {
                 ...prevState,
-                isLoading: true,
-                isRejected: false,
-                isFulfilled: false
+                register: {
+                    isLoading: true,
+                    isRejected: false,
+                    isFulfilled: false
+                }
             }
         case RegisterAction + rejected:
             return {
                 ...prevState,
-                isLoading: false,
-                isRejected: true,
-                isFulfilled: false,
-                errorMessage: action.payload.response.data.data.message
+                register: {
+                    isLoading: false,
+                    isRejected: true,
+                    isFulfilled: false,
+                    errorMessage: action.payload.response.data.data.message
+                }
             }
         case RegisterAction + fulfilled:
             return {
                 ...prevState,
-                isLoading: false,
-                isRejected: false,
-                isFulfilled: true,
-                response: action.payload.data.data
+                register: {
+                    isLoading: false,
+                    isRejected: false,
+                    isFulfilled: true,
+                    response: action.payload.data.data
+                }
             }
         case VerifyAction + pending:
             return {
                 ...prevState,
-                isLoading: true,
-                isRejected: false,
-                isFulfilled: false
+                verify: {
+                    isLoading: true,
+                    isRejected: false,
+                    isFulfilled: false
+                }
             }
         case VerifyAction + rejected:
             return {
                 ...prevState,
-                isLoading: false,
-                isRejected: true,
-                isFulfilled: false,
-                errorMessage: action.payload.response.data.data.message
+                verify: {
+                    isLoading: false,
+                    isRejected: true,
+                    isFulfilled: false,
+                    errorMessage: action.payload.response.data.data.message
+                }
             }
         case VerifyAction + fulfilled:
             return {
                 ...prevState,
-                isLoading: false,
-                isRejected: false,
-                isFulfilled: true,
-                response: action.payload.data.data
+                verify: {
+                    isLoading: false,
+                    isRejected: false,
+                    isFulfilled: true,
+                    response: action.payload.data.data
+                }
             }
         case LoginAction + pending:
             return {
                 ...prevState,
-                isLoading: true,
-                isRejected: false,
-                isFulfilled: false
+                login: {
+                    isLoading: true,
+                    isRejected: false,
+                    isFulfilled: false
+                }
             }
         case LoginAction + rejected:
             return {
                 ...prevState,
-                isLoading: false,
-                isRejected: true,
-                isFulfilled: false,
-                errorMessage: action.payload.response.data.data.message
+                login: {
+                    isLoading: false,
+                    isRejected: true,
+                    isFulfilled: false,
+                    errorMessage: action.payload.response.data.data.message
+                }
             }
         case LoginAction + fulfilled:
             return {
                 ...prevState,
-                isLoading: false,
-                isRejected: false,
-                isFulfilled: true,
-                response: action.payload.data.data
+                login: {
+                    isLoading: false,
+                    isRejected: false,
+                    isFulfilled: true,
+                    response: action.payload.data.data
+                }
             }
         case TokenAction + pending:
             return {
                 ...prevState,
-                isLoading: true,
-                isRejected: false,
-                isFulfilled: false
+                token: {
+                    isLoading: true,
+                    isRejected: false,
+                    isFulfilled: false
+                }
             }
         case TokenAction + rejected:
             return {
                 ...prevState,
-                isLoading: false,
-                isRejected: true,
-                isFulfilled: false,
-                errorMessage: action.payload.response.data.data.message
+                token: {
+                    isLoading: false,
+                    isRejected: true,
+                    isFulfilled: false,
+                    errorMessage: action.payload.response.data.data.message
+                }
             }
         case TokenAction + fulfilled:
             return {
                 ...prevState,
-                isLoading: false,
-                isRejected: false,
-                isFulfilled: true,
-                token: action.payload.data.data.token
+                token: {
+                    isLoading: false,
+                    isRejected: false,
+                    isFulfilled: true,
+                    response: action.payload.data.data.token
+                }
             }
         default:
             return {

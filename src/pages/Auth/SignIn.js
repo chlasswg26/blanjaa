@@ -1,5 +1,6 @@
 import { Image, Tabs, TabList, Tab, Text, TabPanels, TabPanel, Box, Link, Spacer, Center, Alert, AlertIcon, AlertTitle, AlertDescription } from '@chakra-ui/react'
 import { Fragment } from 'react'
+import { useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import Logo from '../../assets/images/logo.png'
 import { containerStyles, tabStyles, tabWrapStyles, textFirstStyles } from '../../assets/styles/Forms/SignIn'
@@ -8,10 +9,11 @@ import Seller from '../../components/Forms/SignIn/Seller'
 
 const SignIn = () => {
     const { state } = useLocation()
-    const token = localStorage.getItem('token')
+    const storage = JSON.parse(localStorage.getItem('storage'))
     const history = useHistory()
+    const auth = useSelector(state => state.Auth)
 
-    token && history.replace('/')
+    storage?.accessToken && history.replace('/')
 
     return (
         <Fragment>
@@ -47,13 +49,50 @@ const SignIn = () => {
                             <Spacer mt='48px' />
 
                             <Center>
+                                <Alert status={state?.type}>
+                                    <AlertIcon />
+                                    <AlertTitle mr={2}>
+                                        {state?.type === 'success' ? 'Well done!' : 'Something wrong!' }
+                                    </AlertTitle>
+                                    <AlertDescription>
+                                        { state?.message }
+                                    </AlertDescription>
+                                </Alert>
+                            </Center>
+                        </Fragment>
+                    ) }
+
+                    { auth?.login?.isRejected && (
+                        <Fragment>
+                            <Spacer mt='48px' />
+                            <Center>
+                                <Alert
+                                    status={(auth?.login?.response?.status === 500 ? 'error' : 'warning')}
+                                >
+                                    <AlertIcon />
+                                    <AlertTitle mr={2}>
+                                        { auth?.login?.response?.status === 500 ? 'Server error:' : 'Something wrong:' }
+                                    </AlertTitle>
+                                    <AlertDescription>
+                                        { auth?.login?.errorMessage }
+                                    </AlertDescription>
+                                </Alert>
+                            </Center>
+                        </Fragment>
+                    ) }
+
+                    { (auth?.login?.isFulfilled && !state?.message) && (
+                        <Fragment>
+                            <Spacer mt='48px' />
+
+                            <Center>
                                 <Alert status='success'>
                                     <AlertIcon />
                                     <AlertTitle mr={2}>
                                         Well done!
                                     </AlertTitle>
                                     <AlertDescription>
-                                        { state?.message }
+                                        Redirecting...
                                     </AlertDescription>
                                 </Alert>
                             </Center>

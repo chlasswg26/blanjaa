@@ -4,6 +4,11 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { SignInModel } from '../../../utils/Schema'
 import { buttonFirstStyles, buttonSecondStyles, circularProgress } from '../../../assets/styles/Forms/Components/SignIn/Customer'
 import { CheckIcon, CloseIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import qs from 'querystring'
+import { LoginActionCreator } from '../../../redux/actions/auth'
+import { useEffect } from 'react'
 
 const fields = [
     {
@@ -29,7 +34,9 @@ const Customer = () => {
         touched,
         isSubmitSuccessful
     } = formState
-
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const auth = useSelector(state => state.Auth)
 
     const checkType = (type, show) => {
         switch (type) {
@@ -97,8 +104,28 @@ const Customer = () => {
 
     const onSubmit = value => {
         delete value.repeatPassword
-        console.log('test:', value)
+        dispatch(
+            LoginActionCreator(
+                qs.stringify(value)
+            )
+        )
     }
+
+    useEffect(() => {
+        if (auth?.login?.isFulfilled && auth?.login?.response?.role === '1') {
+            localStorage.setItem('storage', JSON.stringify(auth?.login?.response))
+            history.replace('/')
+        }
+        if (auth?.login?.isFulfilled && auth?.login?.response?.role === '2') {
+            history.push('/auth/signin', {
+                type: 'warning',
+                message: 'You must log in as Seller'
+            })
+        }
+    }, [
+        auth,
+        history
+    ])
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -149,7 +176,11 @@ const Customer = () => {
             }) }
 
             <Center>
-                <Button {...buttonSecondStyles}>
+                <Button
+                    {...buttonSecondStyles}
+                    loadingText='Submitting'
+                    isLoading={auth?.login?.isLoading}
+                >
                     Submit
                 </Button>
             </Center>

@@ -3,6 +3,7 @@ import { Fragment } from 'react'
 import GuestNavbar from '../../components/Navbar/GuestNavbar'
 import MetaElement from '../../components/MetaElement'
 import Breadcrumbs from '../../components/Breadcrumbs'
+import UserNavbar from '../../components/Navbar/UserNavbar'
 
 const element = {
     title: process.env.REACT_APP_SITE_NAME,
@@ -20,13 +21,19 @@ const breadcrumbLists = [
 ]
 
 const Search = () => {
+    const storage = JSON.parse(localStorage.getItem('storage'))
+
     return (
         <Fragment>
             <MetaElement
                 {...element}
                 subtitle='Search'
             />
-            <GuestNavbar />
+            { storage?.accessToken ? (
+                <UserNavbar />
+            ) : (
+                <GuestNavbar />
+            ) }
             <Box
                 py='3.5%'
                 px='6.5%'

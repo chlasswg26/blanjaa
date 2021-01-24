@@ -1,11 +1,11 @@
 import { Box, Button, Checkbox, CloseButton, Divider, Flex, Heading, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Text, useBreakpointValue, useDisclosure } from '@chakra-ui/react'
 import { Fragment, useState } from 'react'
+import GuestNavbar from '../../components/Navbar/GuestNavbar'
 import UserNavbar from '../../components/Navbar/UserNavbar'
 
 const Checkout = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [show, setShow] = useState()
-
     const variant = useBreakpointValue({
         base: 0,
         xs: 0,
@@ -14,10 +14,15 @@ const Checkout = () => {
         lg: '-110',
         xl: '-120'
     })
+    const storage = JSON.parse(localStorage.getItem('storage'))
 
     return (
         <Fragment>
-            <UserNavbar />
+            { storage?.accessToken ? (
+                <UserNavbar />
+            ) : (
+                <GuestNavbar />
+            ) }
             <Box
                 py='3%'
                 px='6.5%'

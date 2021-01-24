@@ -1,5 +1,5 @@
 import { SearchIcon } from '@chakra-ui/icons'
-import { Avatar, Button, Center, CloseButton, Flex, HStack, IconButton, Image, Input, InputGroup, InputRightElement, Modal, ModalBody, ModalContent, ModalFooter, ModalOverlay, Stack, Text, useDisclosure } from '@chakra-ui/react'
+import { Avatar, Button, Center, chakra, CloseButton, Flex, HStack, IconButton, Image, Input, InputGroup, InputRightElement, Modal, ModalBody, ModalContent, ModalFooter, ModalOverlay, Stack, Text, useDisclosure } from '@chakra-ui/react'
 import { FiFilter, FiBell } from 'react-icons/fi'
 import { BiCart } from 'react-icons/bi'
 import { HiOutlineMail } from 'react-icons/hi'
@@ -10,6 +10,9 @@ import { Fragment, useRef } from 'react'
 const UserNavbar = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const buttonModalRef = useRef()
+    const storage = JSON.parse(localStorage.getItem('storage'))
+
+    console.log(storage)
 
     return (
         <Fragment>
@@ -46,13 +49,15 @@ const UserNavbar = () => {
                         icon={<FiFilter />}
                     />
                     <Stack {...stackStyles}>
-                        <IconButton
-                            {...iconButtonThirdStyles}
-                            aria-label='Cart'
-                            icon={
-                                <BiCart size='27.2px' />
-                            }
-                        />
+                        <chakra.a href='/cart'>
+                            <IconButton
+                                {...iconButtonThirdStyles}
+                                aria-label='Cart'
+                                icon={
+                                    <BiCart size='27.2px' />
+                                }
+                            />
+                        </chakra.a>
                         <IconButton
                             {...iconButtonThirdStyles}
                             aria-label='Notification'
@@ -67,17 +72,19 @@ const UserNavbar = () => {
                                 <HiOutlineMail size='27.2px' />
                             }
                         />
-                        <IconButton
-                            {...iconButtonThirdStyles}
-                            aria-label='Avatar'
-                            icon={
-                                <Avatar
-                                    name='Avatar'
-                                    src='https://google.com/'
-                                    size='sm'
-                                />
-                            }
-                        />
+                        <chakra.a href={`/${storage?.role === '1' ? 'customer' : 'seller'}/profile`}>
+                            <IconButton
+                                {...iconButtonThirdStyles}
+                                aria-label='Avatar'
+                                icon={
+                                    <Avatar
+                                        name={storage?.name}
+                                        srcSet={`${process.env.REACT_APP_API_URL_IMAGE}${storage?.image}`}
+                                        size='sm'
+                                    />
+                                }
+                            />
+                        </chakra.a>
                     </Stack>
                 </Center>
             </HStack>
