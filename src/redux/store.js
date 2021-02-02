@@ -32,7 +32,9 @@ const rootPersistConfig = {
 
 const persistedReducer = persistReducer(rootPersistConfig, RootReducer)
 const logger = createLogger()
-const enhancer = applyMiddleware(promiseMiddleware, logger)
+const enhancerWithLogger = applyMiddleware(promiseMiddleware, logger)
+const enhancerWithoutLogger = applyMiddleware(promiseMiddleware)
+const enhancer = process.env.NODE_ENV === 'production' ? enhancerWithoutLogger : enhancerWithLogger
 const composeEnhancers = composeWithDevTools({
     maxAge: 35
 })

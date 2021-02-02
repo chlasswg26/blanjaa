@@ -1,5 +1,6 @@
 import { Box, Button, Checkbox, CloseButton, Divider, Flex, Heading, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Text, useBreakpointValue, useDisclosure } from '@chakra-ui/react'
 import { Fragment, useState } from 'react'
+import { useSelector } from 'react-redux'
 import GuestNavbar from '../../components/Navbar/GuestNavbar'
 import UserNavbar from '../../components/Navbar/UserNavbar'
 
@@ -14,7 +15,8 @@ const Checkout = () => {
         lg: '-110',
         xl: '-120'
     })
-    const storage = JSON.parse(localStorage.getItem('storage'))
+    const auth = useSelector(state => state.Auth)
+    const storage = auth.login.response
 
     return (
         <Fragment>

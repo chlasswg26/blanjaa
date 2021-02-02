@@ -119,7 +119,6 @@ const Seller = () => {
             })
         }
         if (auth?.login?.isFulfilled && auth?.login?.response?.role === '2') {
-            localStorage.setItem('storage', JSON.stringify(auth?.login?.response))
             history.replace('/seller')
         }
     }, [

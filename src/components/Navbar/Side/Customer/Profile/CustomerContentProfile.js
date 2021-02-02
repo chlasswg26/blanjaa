@@ -1,10 +1,12 @@
 import { Avatar, Box, Button, Divider, Flex, Heading, HStack, Input, Stack, Text } from '@chakra-ui/react'
 import { Fragment } from 'react'
+import { useSelector } from 'react-redux'
 import { useFileUpload } from 'use-file-upload'
 
 const CustomerContentProfile = () => {
     const [file, selectFile] = useFileUpload()
-    const storage = JSON.parse(localStorage.getItem('storage'))
+    const auth = useSelector(state => state.Auth)
+    const storage = auth.login.response
 
     return (
         <Fragment>

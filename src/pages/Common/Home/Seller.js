@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import { Flex } from '@chakra-ui/react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import SellerContentProfile from '../../../components/Navbar/Side/Seller/Profile/SellerContentProfile'
@@ -13,7 +14,6 @@ import SellerContentManagementPayment from '../../../components/Navbar/Side/Sell
 import SellerContentManagementBanner from '../../../components/Navbar/Side/Seller/Banner/SellerContentManagementBanner'
 import SellerContentNewBanner from '../../../components/Navbar/Side/Seller/Banner/SellerContentNewBanner'
 import SellerMenu from '../../../components/Navbar/Side/Seller/SellerMenu'
-import { Fragment } from 'react'
 import MetaElement from '../../../components/MetaElement'
 
 const listPathOfOrders = [
@@ -99,6 +99,7 @@ const Seller = () => {
                         <Route
                             key={sellerPathIndex}
                             path={sellerPath.pathTo}
+                            exact={sellerPath.pathTo === '/seller' ? true : false}
                         >
                             <Fragment>
                                 <MetaElement

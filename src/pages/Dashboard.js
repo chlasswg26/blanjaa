@@ -1,5 +1,6 @@
 import { Box, Flex, HStack, Image, Stack, Text } from '@chakra-ui/react'
 import { Fragment } from 'react'
+import { useSelector } from 'react-redux'
 import { horizontalStackStyles, textFirstStyles, textSecondStyles, boxFirstStyles, boxSecondStyles, boxThirdStyles, boxFourthStyles } from '../assets/styles/Dashboard'
 import CarouselCategory from '../components/CarouselCategory'
 import GuestNavbar from '../components/Navbar/GuestNavbar'
@@ -8,7 +9,8 @@ import UserNavbar from '../components/Navbar/UserNavbar'
 const mapping = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
 const Dashboard = () => {
-    const storage = JSON.parse(localStorage.getItem('storage'))
+    const auth = useSelector(state => state.Auth)
+    const storage = auth.login.response
 
     return (
         <Fragment>

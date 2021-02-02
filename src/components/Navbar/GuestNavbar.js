@@ -2,14 +2,15 @@ import { SearchIcon } from '@chakra-ui/icons'
 import { Button, Center, CloseButton, Flex, HStack, IconButton, Image, Input, InputGroup, InputRightElement, Modal, ModalBody, ModalContent, ModalFooter, ModalOverlay, Stack, Text, useDisclosure } from '@chakra-ui/react'
 import { FiFilter} from 'react-icons/fi'
 import { BiCart } from 'react-icons/bi'
+import { Fragment, useRef } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 import Logo from '../../assets/images/logo.png'
 import { inputStyles, iconButtonFirstStyles, iconButtonSecondStyles, iconButtonThirdStyles, stackStyles, buttonFirstStyles, buttonSecondStyles, horizontalStackStyles, modalStyles, flexFirstStyles, closeButtonStyles, textFirstStyles, textSecondStyles, buttonThirdStyles, buttonFourthStyles, buttonFifthStyles, buttonSixthStyles } from '../../assets/styles/Navbar/GuestNavbar'
-import { Link } from 'react-router-dom'
-import { Fragment, useRef } from 'react'
 
 const GuestNavbar = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const buttonModalRef = useRef()
+    const history = useHistory()
 
     return (
         <Fragment>
@@ -51,6 +52,7 @@ const GuestNavbar = () => {
                         icon={
                             <BiCart size='27.2px' />
                         }
+                        onClick={() => history.push('/cart')}
                     />
                     <Stack {...stackStyles}>
                         <Link

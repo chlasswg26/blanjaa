@@ -1,7 +1,7 @@
 import { Image, Tabs, TabList, Tab, Text, TabPanels, TabPanel, Box, Link, Spacer, Center, Alert, AlertIcon, AlertTitle, AlertDescription } from '@chakra-ui/react'
 import { Fragment } from 'react'
 import { useSelector } from 'react-redux'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import Logo from '../../assets/images/logo.png'
 import { containerStyles, tabStyles, tabWrapStyles, textFirstStyles } from '../../assets/styles/Forms/SignIn'
 import Customer from '../../components/Forms/SignIn/Customer'
@@ -9,11 +9,7 @@ import Seller from '../../components/Forms/SignIn/Seller'
 
 const SignIn = () => {
     const { state } = useLocation()
-    const storage = JSON.parse(localStorage.getItem('storage'))
-    const history = useHistory()
     const auth = useSelector(state => state.Auth)
-
-    storage?.accessToken && history.replace('/')
 
     return (
         <Fragment>

@@ -7,10 +7,10 @@ import { containerStyles, textFirstStyles, textSecondStyles, wrapperStyles } fro
 import Verification from '../../components/Forms/Verify/Verification'
 
 const Verify = () => {
-    const auth = useSelector(state => state.Auth)
     const verify = useSelector(state => state.Verify)
     const { state } = useLocation()
-    const storage = JSON.parse(localStorage.getItem('storage'))
+    const auth = useSelector(state => state.Auth)
+    const storage = auth.login.response
     const history = useHistory()
     
     !state?.guestEmail && history.replace('/auth/signup')

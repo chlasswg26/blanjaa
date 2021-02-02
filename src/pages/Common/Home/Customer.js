@@ -1,14 +1,20 @@
 import { Flex } from '@chakra-ui/react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Fragment } from 'react'
 import CustomerContentProfile from '../../../components/Navbar/Side/Customer/Profile/CustomerContentProfile'
 import CustomerNavbar from '../../../components/Navbar/Side/Customer/CustomerNavbar'
 import UserNavbar from '../../../components/Navbar/UserNavbar'
 import CustomerContentAddress from '../../../components/Navbar/Side/Customer/Address/CustomerContentAddress'
 import CustomerContentOrder from '../../../components/Navbar/Side/Customer/Orders/CustomerContentOrder'
-import { Fragment } from 'react'
 import MetaElement from '../../../components/MetaElement'
+import CustomerMenu from '../../../components/Navbar/Side/Customer/CustomerMenu'
 
 const listPath = [
+    {
+        pathTo: '/customer',
+        component: CustomerMenu,
+        subtitle: 'Customer'
+    },
     {
         pathTo: '/customer/profile',
         component: CustomerContentProfile,
@@ -43,14 +49,11 @@ const Customer = () => {
             >
                 <CustomerNavbar />
                 <Switch>
-                    <Route
-                        path='/customer'
-                        exact
-                    />
                     { listPath.map((customerPath, customerPathIndex) => (
                         <Route
                             key={customerPathIndex}
                             path={customerPath.pathTo}
+                            exact={customerPath.pathTo === '/customer' ? true : false}
                         >
                             <Fragment>
                                 <MetaElement

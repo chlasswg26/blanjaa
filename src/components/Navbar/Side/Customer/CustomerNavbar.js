@@ -2,6 +2,7 @@ import { Avatar, Box, Flex, Heading, List, ListItem, Stack, Text } from '@chakra
 import { FiUser } from 'react-icons/fi'
 import { IoClipboardOutline, IoLocationOutline } from 'react-icons/io5'
 import { MdModeEdit } from 'react-icons/md'
+import { useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 
 const fieldListOfLink = [
@@ -27,7 +28,8 @@ const fieldListOfLink = [
 
 const CustomerNavbar = () => {
     const location = useLocation()
-    const storage = JSON.parse(localStorage.getItem('storage'))
+    const auth = useSelector(state => state.Auth)
+    const storage = auth.login.response
 
     return (
         <Box

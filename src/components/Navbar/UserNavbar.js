@@ -6,13 +6,13 @@ import { HiOutlineMail } from 'react-icons/hi'
 import Logo from '../../assets/images/logo.png'
 import { inputStyles, iconButtonFirstStyles, iconButtonSecondStyles, iconButtonThirdStyles, stackStyles, horizontalStackStyles, modalStyles, flexFirstStyles, closeButtonStyles, textFirstStyles, textSecondStyles, buttonFirstStyles, buttonSecondStyles, buttonThirdStyles, buttonFourthStyles } from '../../assets/styles/Navbar/UserNavbar'
 import { Fragment, useRef } from 'react'
+import { useSelector } from 'react-redux'
 
 const UserNavbar = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const buttonModalRef = useRef()
-    const storage = JSON.parse(localStorage.getItem('storage'))
-
-    console.log(storage)
+    const auth = useSelector(state => state.Auth)
+    const storage = auth.login.response
 
     return (
         <Fragment>
@@ -72,7 +72,7 @@ const UserNavbar = () => {
                                 <HiOutlineMail size='27.2px' />
                             }
                         />
-                        <chakra.a href={`/${storage?.role === '1' ? 'customer' : 'seller'}/profile`}>
+                        <chakra.a href={`/${storage?.role === '1' ? 'customer' : 'seller'}`}>
                             <IconButton
                                 {...iconButtonThirdStyles}
                                 aria-label='Avatar'

@@ -9,7 +9,7 @@ import Seller from '../../components/Forms/SignUp/Seller'
 
 const SignUp = () => {
     const auth = useSelector(state => state.Auth)
-    const storage = JSON.parse(localStorage.getItem('storage'))
+    const storage = auth.login.response
     const history = useHistory()
 
     storage?.accessToken && history.replace('/')

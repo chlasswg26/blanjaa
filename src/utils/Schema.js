@@ -58,8 +58,26 @@ const SignInModel = Yup.object().shape({
         .min(8, 'Password must be at least 8 characters long.')
 })
 
+const SellerProfileModel = Yup.object().shape({
+    name: Yup
+        .string()
+        .label('Name')
+        .required('This field is required.'),
+    phone: Yup
+        .string()
+        .label('Phone number')
+        .min(11, 'The minimum character length is 11')
+        .max(13, 'The maximum character length is 13'),
+    store: Yup
+        .string()
+        .label('Store name')
+        .nullable(true)
+})
+
 export {
     SignUpModel,
     VerifyCodeModel,
-    SignInModel
+    SignInModel,
+
+    SellerProfileModel
 }

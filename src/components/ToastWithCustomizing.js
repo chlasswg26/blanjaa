@@ -7,13 +7,15 @@ const ToastWithCustomizing = ({
 }) => {
     const toast = createStandaloneToast()
 
-    return toast({
-        title: title,
-        description: description,
-        status: status,
-        duration: null,
-        isClosable: true,
-    })
+    return (
+        toast({
+            title: title,
+            description: description,
+            status: status,
+            duration: null,
+            isClosable: true,
+        })
+    )
 }
 
 export default ToastWithCustomizing

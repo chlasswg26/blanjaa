@@ -4,6 +4,7 @@ import { RiSecurePaymentFill } from 'react-icons/ri'
 import { MdModeEdit } from 'react-icons/md'
 import { Link, useLocation } from 'react-router-dom'
 import { BiSticker } from 'react-icons/bi'
+import { useSelector } from 'react-redux'
 
 const fieldListOfLink = [
     {
@@ -94,6 +95,8 @@ const fieldListOfLink = [
 
 const SellerNavbar = () => {
     const location = useLocation()
+    const auth = useSelector(state => state.Auth)
+    const storage = auth.login.response
 
     return (
         <Box
@@ -109,8 +112,8 @@ const SellerNavbar = () => {
                 pl='80px'
             >
                 <Avatar
-                    name='Avatar'
-                    src='https://google.com/'
+                    name={storage?.name}
+                    srcSet={`${process.env.REACT_APP_API_URL_IMAGE}${storage?.image}`}
                 />
                 <Stack
                     direction='column'
@@ -122,7 +125,7 @@ const SellerNavbar = () => {
                         as='h5'
                         size='sm'
                     >
-                        Johanes Mikael
+                        {storage?.name}
                     </Heading>
                     <Flex
                         as='span'

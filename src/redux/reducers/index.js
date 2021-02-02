@@ -16,25 +16,52 @@ import Product from './product'
 import History from './history'
 import GuestCart from './guestCart'
 
-const setTransformVerifyToPreviewOnly = createTransform(
+const setTransformAuthLoginState = createTransform(
     state => {
         return {
             response: {
-                preview: state?.response?.preview
+                ...state.response
             }
         }
     }
 )
+const setTransformVerifyState = createTransform(
+    state => {
+        return {
+            response: {
+                preview: state.response?.preview
+            }
+        }
+    }
+)
+
 const expirationTime = process.env.REACT_APP_EXPIRATION_STATE * 60 * 60 * 1000
+
+const setExpiringForStateAuthLogin = expireIn(expirationTime, 'Login', {
+    response: {},
+    isLoading: false,
+    isRejected: false,
+    isFulfilled: false,
+    errorMessage: ''
+})
 const setExpiringForStateVerify = expireIn(expirationTime, 'Verify', {})
 const setExpiringForStateGuestCart = expireIn(expirationTime, 'GuestCart', [])
 
+const customPersistAuthLogin = {
+    key: 'Login',
+    storage: storage,
+    whitelist: ['login'],
+    transforms: [
+        setTransformAuthLoginState,
+        setExpiringForStateAuthLogin
+    ]
+}
 const customPersistPreviewOnly = {
     key: 'Verify',
     storage: storage,
     whitelist: ['register'],
     transforms: [
-        setTransformVerifyToPreviewOnly,
+        setTransformVerifyState,
         setExpiringForStateVerify
     ]
 }
@@ -51,7 +78,10 @@ const AppReducer = combineReducers({
         customPersistPreviewOnly,
         Auth
     ),
-    Auth,
+    Auth: persistReducer(
+        customPersistAuthLogin,
+        Auth
+    ),
     Category,
     Banner,
     Payment,

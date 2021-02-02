@@ -113,7 +113,6 @@ const Customer = () => {
 
     useEffect(() => {
         if (auth?.login?.isFulfilled && auth?.login?.response?.role === '1') {
-            localStorage.setItem('storage', JSON.stringify(auth?.login?.response))
             history.replace('/')
         }
         if (auth?.login?.isFulfilled && auth?.login?.response?.role === '2') {

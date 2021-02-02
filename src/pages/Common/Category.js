@@ -4,6 +4,7 @@ import GuestNavbar from '../../components/Navbar/GuestNavbar'
 import MetaElement from '../../components/MetaElement'
 import Breadcrumbs from '../../components/Breadcrumbs'
 import UserNavbar from '../../components/Navbar/UserNavbar'
+import { useSelector } from 'react-redux'
 
 const element = {
     title: process.env.REACT_APP_SITE_NAME,
@@ -21,7 +22,8 @@ const breadcrumbLists = [
 ]
 
 const Category = () => {
-    const storage = JSON.parse(localStorage.getItem('storage'))
+    const auth = useSelector(state => state.Auth)
+    const storage = auth.login.response
 
     return (
         <Fragment>

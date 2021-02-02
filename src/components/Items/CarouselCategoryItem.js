@@ -1,15 +1,37 @@
-import { Center, Image, Stack, Text } from '@chakra-ui/react'
+import { Center, Image, Stack, Text, useToast } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import { CenterBoxStyles } from '../../assets/styles/Items/CarouselCategoryItem'
-import { useState } from 'react'
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { authenticate } from 'pixabay-api'
 
 const CarouselCategoryItem = () => {
-    const [image, setImage] = useState()
     const { searchImages } = authenticate(process.env.REACT_APP_PIXABAYKEY)
-    searchImages('pakaian')
-        .then((r) => setImage(r.hits[0].webformatURL))
+    const [image, setImage] = useState('')
+    const toast = useToast()
+
+    useEffect(() => {
+        const loadImagesFromPixabay = () => {
+            searchImages('pakaian', {
+                per_page: 3,
+                safesearch: true
+            })
+                .then(result => {
+                    setImage(result.hits[0].webformatURL)
+                })
+                .catch(error => {
+                    toast({
+                        title: 'Warning',
+                        description: `Failed to load picture of category.\n\r${error}`,
+                        status: 'warning',
+                        duration: 3600,
+                        isClosable: true
+                    })
+                    setImage('')
+                })
+        }
+
+        loadImagesFromPixabay()
+    }, [])
 
     return (
         <Link
