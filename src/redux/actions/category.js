@@ -16,7 +16,7 @@ import {
 const GetCategoryActionCreator = () => {
     return {
         type: GetCategoryAction,
-        payload: GetCategory
+        payload: GetCategory()
     }
 }
 const GetCategoryByIdActionCreator = id => {

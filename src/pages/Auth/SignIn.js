@@ -48,7 +48,7 @@ const SignIn = () => {
                                 <Alert status={state?.type}>
                                     <AlertIcon />
                                     <AlertTitle mr={2}>
-                                        {state?.type === 'success' ? 'Well done!' : 'Something wrong!' }
+                                        {state?.type === 'success' ? 'Well done!' : 'Something wrong!'}
                                     </AlertTitle>
                                     <AlertDescription>
                                         { state?.message }
@@ -63,7 +63,7 @@ const SignIn = () => {
                             <Spacer mt='48px' />
                             <Center>
                                 <Alert
-                                    status={(auth?.login?.response?.status === 500 ? 'error' : 'warning')}
+                                    status={auth?.login?.response?.status === 500 ? 'error' : 'warning'}
                                 >
                                     <AlertIcon />
                                     <AlertTitle mr={2}>

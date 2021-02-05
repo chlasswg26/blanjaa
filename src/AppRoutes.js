@@ -2,9 +2,10 @@ import { Fragment, useEffect, useState } from 'react'
 import {
     BrowserRouter as Router,
     Switch,
-    Route
+    Route,
+    useHistory
 } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Dashboard from './pages/Dashboard'
 import SignUp from './pages/Auth/SignUp'
@@ -19,6 +20,7 @@ import Category from './pages/Common/Category'
 import Product from './pages/Common/Product'
 
 import MetaElement from './components/MetaElement'
+import { ResetAuthStateActionCreator } from './redux/actions/auth'
 
 let mainPath = [
     {
@@ -87,6 +89,8 @@ const AppRoutes = () => {
     const auth = useSelector(state => state.Auth)
     const storage = auth.login.response
     const [filterPath, setFilterPath] = useState([])
+    const dispatch = useDispatch()
+    const history = useHistory()
 
     useEffect(() => {
         if (storage) {
@@ -95,9 +99,32 @@ const AppRoutes = () => {
             storage?.role === '1' && mainPath.pop()
             storage?.role === '2' && mainPath.splice(6, 1)
 
+            const Jwt = (token = storage?.accessToken) => {
+                let decodedToken
+
+                if (token) {
+                    decodedToken = token.split('.')[1]
+                    decodedToken = decodedToken.replace(/-/g, '+').replace(/_/g, '/')
+                    decodedToken = Buffer.from(decodedToken, 'base64')
+                    decodedToken = decodedToken.toString('ascii')
+                    decodedToken = JSON.parse(decodedToken)
+                }
+
+                return decodedToken
+            }
+            const token = Jwt()
+
+            if (token?.exp < Date.now() / 1000) {
+                dispatch(ResetAuthStateActionCreator())
+                history.push('/auth/signin')
+            }
+
             setFilterPath(mainPath)
         }
-    }, [storage])
+    }, [
+        storage,
+        history
+    ])
     
     return (
         <Router>

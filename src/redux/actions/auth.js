@@ -3,7 +3,8 @@ import {
     VerifyAction,
     LoginAction,
     TokenAction,
-    LogoutAction
+    LogoutAction,
+    ResetAuthStateAction
 } from './actionTypes'
 import {
     RegisterUser,
@@ -43,11 +44,17 @@ const LogoutActionCreator = () => {
         payload: LogoutUser
     }
 }
+const ResetAuthStateActionCreator = () => {
+    return {
+        type: ResetAuthStateAction
+    }
+}
 
 export {
     RegisterActionCreator,
     VerifyActionCreator,
     LoginActionCreator,
     TokenActionCreator,
-    LogoutActionCreator
+    LogoutActionCreator,
+    ResetAuthStateActionCreator
 }

@@ -34,7 +34,7 @@ const Payment = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: true,
                 isFulfilled: false,
-                errorMessage: action.payload.response.data.data.message
+                errorMessage: action?.payload?.response?.data?.data?.message
             }
         case GetPaymentAction + fulfilled:
             return {
@@ -57,7 +57,7 @@ const Payment = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: true,
                 isFulfilled: false,
-                errorMessage: action.payload.response.data.data.message
+                errorMessage: action?.payload?.response?.data?.data?.message
             }
         case GetPaymentByIdAction + fulfilled:
             return {
@@ -80,7 +80,7 @@ const Payment = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: true,
                 isFulfilled: false,
-                errorMessage: action.payload.response.data.data.message
+                errorMessage: action?.payload?.response?.data?.data?.message
             }
         case PostPaymentAction + fulfilled:
             return {
@@ -88,7 +88,7 @@ const Payment = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: false,
                 isFulfilled: true,
-                response: action.payload.data.data
+                response: action?.payload?.data?.data
             }
         case PutPaymentAction + pending:
             return {
@@ -103,7 +103,7 @@ const Payment = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: true,
                 isFulfilled: false,
-                errorMessage: action.payload.response.data.data.message
+                errorMessage: action?.payload?.response?.data?.data?.message
             }
         case PutPaymentAction + fulfilled:
             return {
@@ -111,7 +111,7 @@ const Payment = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: false,
                 isFulfilled: true,
-                response: action.payload.data.data
+                response: action?.payload?.data?.data
             }
         case DeletePaymentAction + pending:
             return {
@@ -126,7 +126,7 @@ const Payment = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: true,
                 isFulfilled: false,
-                errorMessage: action.payload.response.data.data.message
+                errorMessage: action?.payload?.response?.data?.data?.message
             }
         case DeletePaymentAction + fulfilled:
             return {
@@ -134,7 +134,7 @@ const Payment = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: false,
                 isFulfilled: true,
-                response: action.payload.data.data
+                response: action?.payload?.data?.data
             }
         default:
             return {

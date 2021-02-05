@@ -34,7 +34,7 @@ const Banner = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: true,
                 isFulfilled: false,
-                errorMessage: action.payload.response.data.data.message
+                errorMessage: action?.payload?.response?.data?.data?.message
             }
         case GetBannerAction + fulfilled:
             return {
@@ -57,7 +57,7 @@ const Banner = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: true,
                 isFulfilled: false,
-                errorMessage: action.payload.response.data.data.message
+                errorMessage: action?.payload?.response?.data?.data?.message
             }
         case GetBannerByIdAction + fulfilled:
             return {
@@ -80,7 +80,7 @@ const Banner = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: true,
                 isFulfilled: false,
-                errorMessage: action.payload.response.data.data.message
+                errorMessage: action?.payload?.response?.data?.data?.message
             }
         case PostBannerAction + fulfilled:
             return {
@@ -88,7 +88,7 @@ const Banner = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: false,
                 isFulfilled: true,
-                response: action.payload.data.data
+                response: action?.payload?.data?.data
             }
         case PutBannerAction + pending:
             return {
@@ -103,7 +103,7 @@ const Banner = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: true,
                 isFulfilled: false,
-                errorMessage: action.payload.response.data.data.message
+                errorMessage: action?.payload?.response?.data?.data?.message
             }
         case PutBannerAction + fulfilled:
             return {
@@ -111,7 +111,7 @@ const Banner = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: false,
                 isFulfilled: true,
-                response: action.payload.data.data
+                response: action?.payload?.data?.data
             }
         case DeleteBannerAction + pending:
             return {
@@ -126,7 +126,7 @@ const Banner = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: true,
                 isFulfilled: false,
-                errorMessage: action.payload.response.data.data.message
+                errorMessage: action?.payload?.response?.data?.data?.message
             }
         case DeleteBannerAction + fulfilled:
             return {
@@ -134,7 +134,7 @@ const Banner = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: false,
                 isFulfilled: true,
-                response: action.payload.data.data
+                response: action?.payload?.data?.data
             }
         default:
             return {

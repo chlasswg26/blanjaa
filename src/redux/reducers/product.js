@@ -36,7 +36,7 @@ const Product = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: true,
                 isFulfilled: false,
-                errorMessage: action.payload.response.data.data.message
+                errorMessage: action?.payload?.response?.data?.data?.message
             }
         case GetProductAction + fulfilled:
             return {
@@ -59,7 +59,7 @@ const Product = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: true,
                 isFulfilled: false,
-                errorMessage: action.payload.response.data.data.message
+                errorMessage: action?.payload?.response?.data?.data?.message
             }
         case GetProductByIdAction + fulfilled:
             return {
@@ -82,7 +82,7 @@ const Product = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: true,
                 isFulfilled: false,
-                errorMessage: action.payload.response.data.data.message
+                errorMessage: action?.payload?.response?.data?.data?.message
             }
         case GetProductBySellerAction + fulfilled:
             return {
@@ -105,7 +105,7 @@ const Product = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: true,
                 isFulfilled: false,
-                errorMessage: action.payload.response.data.data.message
+                errorMessage: action?.payload?.response?.data?.data?.message
             }
         case PostProductAction + fulfilled:
             return {
@@ -113,7 +113,7 @@ const Product = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: false,
                 isFulfilled: true,
-                response: action.payload.data.data
+                response: action?.payload?.data?.data
             }
         case PutProductAction + pending:
             return {
@@ -128,7 +128,7 @@ const Product = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: true,
                 isFulfilled: false,
-                errorMessage: action.payload.response.data.data.message
+                errorMessage: action?.payload?.response?.data?.data?.message
             }
         case PutProductAction + fulfilled:
             return {
@@ -136,7 +136,7 @@ const Product = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: false,
                 isFulfilled: true,
-                response: action.payload.data.data
+                response: action?.payload?.data?.data
             }
         case DeleteProductAction + pending:
             return {
@@ -151,7 +151,7 @@ const Product = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: true,
                 isFulfilled: false,
-                errorMessage: action.payload.response.data.data.message
+                errorMessage: action?.payload?.response?.data?.data?.message
             }
         case DeleteProductAction + fulfilled:
             return {
@@ -159,7 +159,7 @@ const Product = (prevState = initialValue, action) => {
                 isLoading: false,
                 isRejected: false,
                 isFulfilled: true,
-                response: action.payload.data.data
+                response: action?.payload?.data?.data
             }
         default:
             return {

@@ -1,11 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import reportWebVitals from './reportWebVitals';
+
+const theme = extendTheme({
+  fonts: {
+    heading: 'Oswald',
+    body: 'Lato',
+    mono: 'Montserrat'
+  }
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ChakraProvider theme={theme}>
+      <App />
+    </ChakraProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

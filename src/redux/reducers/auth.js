@@ -5,7 +5,8 @@ import {
     RegisterAction,
     VerifyAction,
     LoginAction,
-    TokenAction
+    TokenAction,
+    ResetAuthStateAction
 } from '../actions/actionTypes'
 
 const initialValue = {
@@ -57,7 +58,7 @@ const Auth = (prevState = initialValue, action) => {
                     isLoading: false,
                     isRejected: true,
                     isFulfilled: false,
-                    errorMessage: action.payload.response.data.data.message
+                    errorMessage: action?.payload?.response?.data?.data?.message
                 }
             }
         case RegisterAction + fulfilled:
@@ -67,7 +68,7 @@ const Auth = (prevState = initialValue, action) => {
                     isLoading: false,
                     isRejected: false,
                     isFulfilled: true,
-                    response: action.payload.data.data
+                    response: action?.payload?.data?.data
                 }
             }
         case VerifyAction + pending:
@@ -86,7 +87,7 @@ const Auth = (prevState = initialValue, action) => {
                     isLoading: false,
                     isRejected: true,
                     isFulfilled: false,
-                    errorMessage: action.payload.response.data.data.message
+                    errorMessage: action?.payload?.response?.data?.data?.message
                 }
             }
         case VerifyAction + fulfilled:
@@ -96,7 +97,7 @@ const Auth = (prevState = initialValue, action) => {
                     isLoading: false,
                     isRejected: false,
                     isFulfilled: true,
-                    response: action.payload.data.data
+                    response: action?.payload?.data?.data
                 }
             }
         case LoginAction + pending:
@@ -115,7 +116,7 @@ const Auth = (prevState = initialValue, action) => {
                     isLoading: false,
                     isRejected: true,
                     isFulfilled: false,
-                    errorMessage: action.payload.response.data.data.message
+                    errorMessage: action?.payload?.response?.data?.data?.message
                 }
             }
         case LoginAction + fulfilled:
@@ -125,7 +126,7 @@ const Auth = (prevState = initialValue, action) => {
                     isLoading: false,
                     isRejected: false,
                     isFulfilled: true,
-                    response: action.payload.data.data
+                    response: action?.payload?.data?.data
                 }
             }
         case TokenAction + pending:
@@ -144,7 +145,7 @@ const Auth = (prevState = initialValue, action) => {
                     isLoading: false,
                     isRejected: true,
                     isFulfilled: false,
-                    errorMessage: action.payload.response.data.data.message
+                    errorMessage: action?.payload?.response?.data?.data?.message
                 }
             }
         case TokenAction + fulfilled:
@@ -154,7 +155,13 @@ const Auth = (prevState = initialValue, action) => {
                     isLoading: false,
                     isRejected: false,
                     isFulfilled: true,
-                    response: action.payload.data.data.token
+                    response: action?.payload?.data?.data?.token
+                }
+            }
+        case ResetAuthStateAction:
+            return {
+                login: {
+                    response: {}
                 }
             }
         default:

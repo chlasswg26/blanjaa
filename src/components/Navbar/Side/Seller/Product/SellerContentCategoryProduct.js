@@ -1,8 +1,54 @@
-import { Fragment } from 'react'
-import { Box, Button, Flex, Input, Select, Stack, Tag, TagCloseButton, TagLabel, Text } from '@chakra-ui/react'
+import { Fragment, useEffect, useState } from 'react'
+import { Box, Button, Input, Select, Stack, Tag, TagCloseButton, TagLabel, Text, useToast, Wrap, WrapItem } from '@chakra-ui/react'
 import Panel from '../../../../Panel'
+import { useForm } from 'react-hook-form'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
+import { GetCategoryActionCreator, PostCategoryActionCreator } from '../../../../../redux/actions/category'
 
 const SellerContentCategoryProduct = () => {
+    const { register, handleSubmit, formState } = useForm()
+    const dispatch = useDispatch()
+    const { auth, category } = useSelector(state => ({
+        auth: state.Auth,
+        category: state.Category
+    }), shallowEqual)
+    const toast = useToast()
+    const storage = auth.login.response
+    const [isDispatched, setIsDispatched] = useState(false)
+
+    const onSubmit = data => {
+        setIsDispatched(true)
+        dispatch(
+            PostCategoryActionCreator(data, storage?.accessToken)
+        )
+    }
+
+    useEffect(() => {
+        if (isDispatched) {
+            isDispatched ? toast({
+                title: 'Success',
+                description: `New category added.`,
+                status: 'success',
+                duration: null,
+                isClosable: true
+            }) : category.isRejected && toast({
+                title: 'Error',
+                description: `${category.errorMessage}!`,
+                status: 'error',
+                duration: null,
+                isClosable: true
+            })
+        }
+
+        setIsDispatched(false)
+
+        const getCategoryData = () => {
+            dispatch(GetCategoryActionCreator())
+        }
+
+        getCategoryData()
+    }, [isDispatched])
+
     return (
         <Fragment>
             <Stack
@@ -37,7 +83,7 @@ const SellerContentCategoryProduct = () => {
                             </Text>
                         }
                         panelBody={
-                            <Fragment>
+                            <form onSubmit={handleSubmit(onSubmit)}>
                                 <Stack
                                     shouldWrapChildren={true}
                                     spacing={10}
@@ -57,6 +103,10 @@ const SellerContentCategoryProduct = () => {
                                         </Text>
                                         <Input
                                             type='text'
+                                            name='name'
+                                            ref={register({
+                                                required: true
+                                            })}
                                             focusBorderColor='#DB3022'
                                             borderColor='darkgrey'
                                             w='305px'
@@ -64,6 +114,7 @@ const SellerContentCategoryProduct = () => {
                                     </Box>
                                 </Stack>
                                 <Button
+                                    type='submit'
                                     variant='outline'
                                     bg='#DB3022'
                                     textColor='white'
@@ -87,10 +138,17 @@ const SellerContentCategoryProduct = () => {
                                     }}
                                     overflow='auto'
                                     overflowWrap='anywhere'
+                                    _loading={{
+                                        w: '200px'
+                                    }}
+                                    loadingText='Adding'
+                                    isLoading={
+                                        (category.isLoading && formState.isSubmitSuccessful) && true
+                                    }
                                 >
                                     Add
                                 </Button>
-                            </Fragment>
+                            </form>
                         }
                     />
                     <Panel
@@ -192,7 +250,7 @@ const SellerContentCategoryProduct = () => {
                 <Panel
                     mainStyles={{
                         w: '980px',
-                        h: '700px'
+                        h: '800px'
                     }}
                     panelHead={
                         <Text
@@ -204,25 +262,28 @@ const SellerContentCategoryProduct = () => {
                         </Text>
                     }
                     panelBody={
-                        <Flex
-                            flexDirection='row'
-                            flexWrap='wrap'
-                            justify='stretch'
+                        <Wrap
+                            justify='space-between'
+                            direction='row-reverse'
+                            h='600px'
+                            overflow='auto'
+                            overflowWrap='anywhere'
                         >
-                            {['lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg', 'lg'].map((size) => (
-                                <Tag
-                                    size={size}
-                                    key={size}
-                                    borderRadius='full'
-                                    variant='solid'
-                                    colorScheme='green'
-                                    m='5px'
-                                >
-                                    <TagLabel>Green</TagLabel>
-                                    <TagCloseButton />
-                                </Tag>
+                            {category.result.map((category, categoryIndex) => (
+                                <WrapItem key={categoryIndex}>
+                                    <Tag
+                                        size='lg'
+                                        borderRadius='full'
+                                        variant='solid'
+                                        colorScheme='green'
+                                        m='5px'
+                                    >
+                                        <TagLabel>{category.name}</TagLabel>
+                                        <TagCloseButton />
+                                    </Tag>
+                                </WrapItem>
                             ))}
-                        </Flex>
+                        </Wrap>
                     }
                 />
             </Stack>

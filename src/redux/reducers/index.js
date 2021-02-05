@@ -36,14 +36,6 @@ const setTransformVerifyState = createTransform(
 )
 
 const expirationTime = process.env.REACT_APP_EXPIRATION_STATE * 60 * 60 * 1000
-
-const setExpiringForStateAuthLogin = expireIn(expirationTime, 'Login', {
-    response: {},
-    isLoading: false,
-    isRejected: false,
-    isFulfilled: false,
-    errorMessage: ''
-})
 const setExpiringForStateVerify = expireIn(expirationTime, 'Verify', {})
 const setExpiringForStateGuestCart = expireIn(expirationTime, 'GuestCart', [])
 
@@ -52,8 +44,7 @@ const customPersistAuthLogin = {
     storage: storage,
     whitelist: ['login'],
     transforms: [
-        setTransformAuthLoginState,
-        setExpiringForStateAuthLogin
+        setTransformAuthLoginState
     ]
 }
 const customPersistPreviewOnly = {

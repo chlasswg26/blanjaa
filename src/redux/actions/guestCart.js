@@ -1,38 +1,38 @@
 import {
-    GuestAddToCart,
-    GuestRemoveFromCart,
-    GuestAddQuantityToCart,
-    GuestSubQuantityToCart,
-    GuestEmptyCart
+    GuestAddToCartAction,
+    GuestRemoveFromCartAction,
+    GuestAddQuantityToCartAction,
+    GuestSubQuantityToCartAction,
+    GuestEmptyCartAction
 } from './actionTypes'
 
 const GuestAddToCartActionCreator = id => {
     return {
-        type: GuestAddToCart,
+        type: GuestAddToCartAction,
         id
     }
 }
 const GuestRemoveFromCartActionCreator = id => {
     return {
-        type: GuestRemoveFromCart,
+        type: GuestRemoveFromCartAction,
         id
     }
 }
 const GuestAddQuantityToCartActionCreator = id => {
     return {
-        type: GuestAddQuantityToCart,
+        type: GuestAddQuantityToCartAction,
         id
     }
 }
 const GuestSubQuantityToCartActionCreator = id => {
     return {
-        type: GuestSubQuantityToCart,
+        type: GuestSubQuantityToCartAction,
         id
     }
 }
 const GuestEmptyCartActionCreator = () => {
     return {
-        type: GuestEmptyCart
+        type: GuestEmptyCartAction
     }
 }
 

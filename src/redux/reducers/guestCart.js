@@ -1,9 +1,9 @@
 import {
-    GuestAddToCart,
-    GuestRemoveFromCart,
-    GuestAddQuantityToCart,
-    GuestSubQuantityToCart,
-    GuestEmptyCart
+    GuestAddToCartAction,
+    GuestRemoveFromCartAction,
+    GuestAddQuantityToCartAction,
+    GuestSubQuantityToCartAction,
+    GuestEmptyCartAction
 } from '../actions/actionTypes'
 
 const initialValue = {
@@ -12,14 +12,14 @@ const initialValue = {
 
 const GuestCart = (prevState = initialValue, action) => {
     switch (action.type) {
-        case GuestAddToCart:
+        case GuestAddToCartAction:
             return {
                 ...prevState,
                 products: prevState.products.map(product =>
                     product.id === action.id ? { ...product, selected: true } : product,
                 ),
             }
-        case GuestRemoveFromCart:
+        case GuestRemoveFromCartAction:
             return {
                 ...prevState,
                 products: prevState.products.map(product =>
@@ -28,7 +28,7 @@ const GuestCart = (prevState = initialValue, action) => {
                         : product,
                 ),
             }
-        case GuestAddQuantityToCart:
+        case GuestAddQuantityToCartAction:
             return {
                 ...prevState,
                 products: prevState.products.map(product =>
@@ -37,7 +37,7 @@ const GuestCart = (prevState = initialValue, action) => {
                         : product,
                 ),
             }
-        case GuestSubQuantityToCart:
+        case GuestSubQuantityToCartAction:
             return {
                 ...prevState,
                 products: prevState.products.map(product =>
@@ -49,7 +49,7 @@ const GuestCart = (prevState = initialValue, action) => {
                         : product,
                 ),
             }
-        case GuestEmptyCart:
+        case GuestEmptyCartAction:
             return {
                 ...prevState,
                 products: prevState.products.map(product =>

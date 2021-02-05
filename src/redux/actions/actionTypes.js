@@ -62,11 +62,13 @@ const PostHistoryAction = 'POST_HISTORY'
 const PutHistoryAction = 'PUT_HISTORY'
 const DeleteHistoryAction = 'DELETE_HISTORY'
 
-const GuestAddToCart = 'ADD_TO_CART'
-const GuestRemoveFromCart = 'REMOVE_FROM_CART'
-const GuestAddQuantityToCart = 'ADD_QUANTITY'
-const GuestSubQuantityToCart = 'SUB_QUANTITY'
-const GuestEmptyCart = 'EMPTY_CART'
+const GuestAddToCartAction = 'ADD_TO_CART'
+const GuestRemoveFromCartAction = 'REMOVE_FROM_CART'
+const GuestAddQuantityToCartAction = 'ADD_QUANTITY'
+const GuestSubQuantityToCartAction = 'SUB_QUANTITY'
+const GuestEmptyCartAction = 'EMPTY_CART'
+
+const ResetAuthStateAction = 'RESET_AUTH_STATE'
 
 export {
     pending,
@@ -133,9 +135,11 @@ export {
     PutHistoryAction,
     DeleteHistoryAction,
 
-    GuestAddToCart,
-    GuestRemoveFromCart,
-    GuestAddQuantityToCart,
-    GuestSubQuantityToCart,
-    GuestEmptyCart
+    GuestAddToCartAction,
+    GuestRemoveFromCartAction,
+    GuestAddQuantityToCartAction,
+    GuestSubQuantityToCartAction,
+    GuestEmptyCartAction,
+
+    ResetAuthStateAction
 }
