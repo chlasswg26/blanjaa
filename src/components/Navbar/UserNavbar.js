@@ -1,5 +1,5 @@
 import { SearchIcon } from '@chakra-ui/icons'
-import { Avatar, Button, Center, chakra, CloseButton, Flex, HStack, IconButton, Image, Input, InputGroup, InputRightElement, Modal, ModalBody, ModalContent, ModalFooter, ModalOverlay, Stack, Text, useDisclosure } from '@chakra-ui/react'
+import { Avatar, Button, Center, CloseButton, Flex, HStack, IconButton, Image, Input, InputGroup, InputRightElement, Modal, ModalBody, ModalContent, ModalFooter, ModalOverlay, Stack, Text, useDisclosure } from '@chakra-ui/react'
 import { FiFilter, FiBell } from 'react-icons/fi'
 import { BiCart } from 'react-icons/bi'
 import { HiOutlineMail } from 'react-icons/hi'
@@ -7,12 +7,14 @@ import Logo from '../../assets/images/logo.png'
 import { inputStyles, iconButtonFirstStyles, iconButtonSecondStyles, iconButtonThirdStyles, stackStyles, horizontalStackStyles, modalStyles, flexFirstStyles, closeButtonStyles, textFirstStyles, textSecondStyles, buttonFirstStyles, buttonSecondStyles, buttonThirdStyles, buttonFourthStyles } from '../../assets/styles/Navbar/UserNavbar'
 import { Fragment, useRef } from 'react'
 import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 const UserNavbar = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const buttonModalRef = useRef()
     const auth = useSelector(state => state.Auth)
     const storage = auth.login.response
+    const history = useHistory()
 
     return (
         <Fragment>
@@ -49,15 +51,14 @@ const UserNavbar = () => {
                         icon={<FiFilter />}
                     />
                     <Stack {...stackStyles}>
-                        <chakra.a href='/cart'>
-                            <IconButton
-                                {...iconButtonThirdStyles}
-                                aria-label='Cart'
-                                icon={
-                                    <BiCart size='27.2px' />
-                                }
-                            />
-                        </chakra.a>
+                        <IconButton
+                            {...iconButtonThirdStyles}
+                            aria-label='Cart'
+                            icon={
+                                <BiCart size='27.2px' />
+                            }
+                            onClick={() => history.push('/cart')}
+                        />
                         <IconButton
                             {...iconButtonThirdStyles}
                             aria-label='Notification'
@@ -72,19 +73,18 @@ const UserNavbar = () => {
                                 <HiOutlineMail size='27.2px' />
                             }
                         />
-                        <chakra.a href={`/${storage?.role === '1' ? 'customer' : 'seller'}`}>
-                            <IconButton
-                                {...iconButtonThirdStyles}
-                                aria-label='Avatar'
-                                icon={
-                                    <Avatar
-                                        name={storage?.name}
-                                        srcSet={`${process.env.REACT_APP_API_URL_IMAGE}${storage?.image}`}
-                                        size='sm'
-                                    />
-                                }
-                            />
-                        </chakra.a>
+                        <IconButton
+                            {...iconButtonThirdStyles}
+                            aria-label='Avatar'
+                            icon={
+                                <Avatar
+                                    name={storage?.name}
+                                    srcSet={`${process.env.REACT_APP_API_URL_IMAGE}${storage?.image}`}
+                                    size='sm'
+                                />
+                            }
+                            onClick={() => history.push(`/${storage?.role === '1' ? 'customer' : 'seller'}`)}
+                        />
                     </Stack>
                 </Center>
             </HStack>

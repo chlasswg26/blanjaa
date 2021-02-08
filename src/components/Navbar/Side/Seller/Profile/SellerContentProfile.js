@@ -46,10 +46,7 @@ const SellerContentProfile = () => {
         }
 
         getUserInformationById()
-    }, [
-        id,
-        accessToken
-    ])
+    }, [])
 
     useEffect(() => {
         (user.isFulfilled && formState.isSubmitSuccessful) && (toast({
@@ -66,9 +63,7 @@ const SellerContentProfile = () => {
             duration: null,
             isClosable: true
         }))
-    }, [
-        user
-    ])
+    }, [user])
 
     return (
         <Box

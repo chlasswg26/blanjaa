@@ -20,7 +20,7 @@ const setTransformAuthLoginState = createTransform(
     state => {
         return {
             response: {
-                ...state.response
+                ...state?.response
             }
         }
     }
@@ -29,7 +29,7 @@ const setTransformVerifyState = createTransform(
     state => {
         return {
             response: {
-                preview: state.response?.preview
+                preview: state?.response?.preview
             }
         }
     }

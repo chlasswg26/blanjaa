@@ -7,14 +7,13 @@ import { containerStyles, textFirstStyles, textSecondStyles, wrapperStyles } fro
 import Verification from '../../components/Forms/Verify/Verification'
 
 const Verify = () => {
-    const verify = useSelector(state => state.Verify)
     const { state } = useLocation()
     const auth = useSelector(state => state.Auth)
     const storage = auth.login.response
     const history = useHistory()
     
     !state?.guestEmail && history.replace('/auth/signup')
-    state?.guestEmail && !verify?.register?.response?.preview && history.replace('/auth/signup')
+    state?.guestEmail && !auth.register.response?.preview && history.replace('/auth/signup')
     storage?.accessToken && history.replace('/')
 
     return (
@@ -62,13 +61,13 @@ const Verify = () => {
                     </WrapItem>
                 </Wrap>
 
-                { verify?.register?.response?.preview && (
+                { auth.register.response?.preview && (
                     <Fragment>
                         <Spacer mt='48px' />
 
                         <Center>
                             <Link
-                                href={verify?.register?.response?.preview}
+                                href={auth.register.response?.preview}
                                 target='_blank'
                             >
                                 <Text {...textSecondStyles}>

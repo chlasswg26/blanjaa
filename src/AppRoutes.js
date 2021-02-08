@@ -1,6 +1,5 @@
 import { Fragment, useEffect, useState } from 'react'
 import {
-    BrowserRouter as Router,
     Switch,
     Route,
     useHistory
@@ -67,16 +66,6 @@ let mainPath = [
         pathTo: '/auth/verify',
         component: Verify,
         subtitle: 'Verification'
-    },
-    {
-        pathTo: '/customer',
-        component: Customer,
-        subtitle: 'Customer'
-    },
-    {
-        pathTo: '/seller',
-        component: Seller,
-        subtitle: 'Seller'
     }
 ]
 
@@ -95,10 +84,9 @@ const AppRoutes = () => {
     useEffect(() => {
         if (storage) {
             storage?.accessToken && mainPath.splice(6, 3)
-            !storage?.accessToken && mainPath.splice(9, 2)
-            storage?.role === '1' && mainPath.pop()
-            storage?.role === '2' && mainPath.splice(6, 1)
-
+            
+            setFilterPath(mainPath)
+            
             const Jwt = (token = storage?.accessToken) => {
                 let decodedToken
 
@@ -112,14 +100,13 @@ const AppRoutes = () => {
 
                 return decodedToken
             }
+
             const token = Jwt()
 
             if (token?.exp < Date.now() / 1000) {
                 dispatch(ResetAuthStateActionCreator())
                 history.push('/auth/signin')
             }
-
-            setFilterPath(mainPath)
         }
     }, [
         storage,
@@ -127,7 +114,7 @@ const AppRoutes = () => {
     ])
     
     return (
-        <Router>
+        <Fragment>
             <Switch>
                 {filterPath.map((path, pathIndex) => (
                     <Route
@@ -145,7 +132,10 @@ const AppRoutes = () => {
                     </Route>
                 ))}
             </Switch>
-        </Router>
+            { storage?.accessToken && (
+                storage?.role === '1' ? <Customer /> : (storage?.role === '2' && <Seller />)
+            ) }
+        </Fragment>
     )
 }
 

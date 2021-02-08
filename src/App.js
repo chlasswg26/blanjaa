@@ -1,7 +1,7 @@
 import { Provider as ReduxProvider } from 'react-redux'
-import { Spinner } from '@chakra-ui/react'
 import { HelmetProvider } from 'react-helmet-async'
 import { PersistGate } from 'redux-persist/es/integration/react'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 import { store, persistor } from './redux/store'
 
@@ -14,7 +14,9 @@ const App = () => {
             <ReduxProvider store={store}>
                 <PersistGate persistor={persistor}>
                     <Fonts />
-                    <AppRoutes />
+                    <Router>
+                        <AppRoutes />
+                    </Router>
                 </PersistGate>
             </ReduxProvider>
         </HelmetProvider>

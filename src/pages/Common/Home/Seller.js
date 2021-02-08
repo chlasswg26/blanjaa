@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import { Flex } from '@chakra-ui/react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import SellerContentProfile from '../../../components/Navbar/Side/Seller/Profile/SellerContentProfile'
 import SellerNavbar from '../../../components/Navbar/Side/Seller/SellerNavbar'
 import UserNavbar from '../../../components/Navbar/UserNavbar'
@@ -85,7 +85,7 @@ const element = {
 
 const Seller = () => {
     return (
-        <Router>
+        <Fragment>
             <UserNavbar />
             <Flex
                 flexDirection='row'
@@ -112,7 +112,7 @@ const Seller = () => {
                     )) }
                 </Switch>
             </Flex>
-        </Router>
+        </Fragment>
     )
 }
 

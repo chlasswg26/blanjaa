@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect } from 'react'
 import { Box, Button, Input, Select, Stack, Tag, TagCloseButton, TagLabel, Text, useToast, Wrap, WrapItem } from '@chakra-ui/react'
 import Panel from '../../../../Panel'
 import { useForm } from 'react-hook-form'
@@ -14,40 +14,45 @@ const SellerContentCategoryProduct = () => {
     }), shallowEqual)
     const toast = useToast()
     const storage = auth.login.response
-    const [isDispatched, setIsDispatched] = useState(false)
 
     const onSubmit = data => {
-        setIsDispatched(true)
         dispatch(
             PostCategoryActionCreator(data, storage?.accessToken)
         )
     }
 
     useEffect(() => {
-        if (isDispatched) {
-            isDispatched ? toast({
-                title: 'Success',
-                description: `New category added.`,
-                status: 'success',
-                duration: null,
-                isClosable: true
-            }) : category.isRejected && toast({
-                title: 'Error',
-                description: `${category.errorMessage}!`,
-                status: 'error',
-                duration: null,
-                isClosable: true
-            })
-        }
-
-        setIsDispatched(false)
-
         const getCategoryData = () => {
             dispatch(GetCategoryActionCreator())
         }
 
         getCategoryData()
-    }, [isDispatched])
+    }, [])
+
+    useEffect(() => {
+        (category.isFulfilled && formState.isSubmitSuccessful) && (toast({
+            title: 'Success',
+            description: `New category <b>${category.response?.name}</b> added.`,
+            status: 'success',
+            duration: null,
+            isClosable: true
+        }))
+        category.isRejected && (toast({
+            title: 'Error',
+            description: `${category.errorMessage}!`,
+            status: 'error',
+            duration: null,
+            isClosable: true
+        }))
+    }, [category])
+
+    useEffect(() => {
+        const getCategoryData = () => {
+            dispatch(GetCategoryActionCreator())
+        }
+
+        category.response && (getCategoryData())
+    }, [])
 
     return (
         <Fragment>
