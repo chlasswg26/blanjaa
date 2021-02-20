@@ -16,7 +16,7 @@ import {
 const GetBannerActionCreator = () => {
     return {
         type: GetBannerAction,
-        payload: GetBanner
+        payload: GetBanner()
     }
 }
 const GetBannerByIdActionCreator = id => {

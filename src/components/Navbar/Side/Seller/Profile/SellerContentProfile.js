@@ -1,3 +1,4 @@
+
 import { Avatar, Box, Button, Divider, Flex, Heading, HStack, Input, Stack, Text, useToast } from '@chakra-ui/react'
 import { useFileUpload } from 'use-file-upload'
 import { useForm } from 'react-hook-form'
@@ -5,11 +6,11 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useDispatch, useSelector } from 'react-redux'
 import { SellerProfileModel } from '../../../../../utils/Schema'
 import { GetUserByIdActionCreator, PutUserActionCreator } from '../../../../../redux/actions/user'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const SellerContentProfile = () => {
     const [file, selectFile] = useFileUpload()
-    const { register, handleSubmit, formState } = useForm({
+    const { register, handleSubmit } = useForm({
         resolver: yupResolver(SellerProfileModel)
     })
     const dispatch = useDispatch()
@@ -18,6 +19,7 @@ const SellerContentProfile = () => {
     const auth = useSelector(state => state.Auth)
     const storage = auth.login.response
     const { id, accessToken } = storage
+    const [isUpdate, setIsUpdate] = useState(false)
 
     const onSubmit = (value) => {
         const data = new FormData()
@@ -33,6 +35,7 @@ const SellerContentProfile = () => {
                 accessToken
             )
         )
+        setIsUpdate(true)
     }
 
     useEffect(() => {
@@ -49,13 +52,6 @@ const SellerContentProfile = () => {
     }, [])
 
     useEffect(() => {
-        (user.isFulfilled && formState.isSubmitSuccessful) && (toast({
-            title: 'Success',
-            description: `You're account has been updated.`,
-            status: 'success',
-            duration: null,
-            isClosable: true
-        }))
         user.isRejected && (toast({
             title: 'Error',
             description: `${user.errorMessage}!`,
@@ -63,7 +59,28 @@ const SellerContentProfile = () => {
             duration: null,
             isClosable: true
         }))
-    }, [user])
+
+        if (isUpdate && user.isFulfilled) {
+            const getUserInformationById = () => {
+                dispatch(
+                    GetUserByIdActionCreator(
+                        id,
+                        accessToken
+                    )
+                )
+            }
+
+            setIsUpdate(false)
+            getUserInformationById()
+            toast({
+                title: 'Success',
+                description: `You're account has been updated.`,
+                status: 'success',
+                duration: null,
+                isClosable: true
+            })
+        }
+    }, [isUpdate, user])
 
     return (
         <Box
@@ -237,7 +254,7 @@ const SellerContentProfile = () => {
                                     w: '200px'
                                 }}
                                 loadingText={
-                                    (user.isLoading && formState.isSubmitSuccessful) ? 'Saving changes' : 'Fetching information'
+                                    (user.isLoading && isUpdate) ? 'Saving changes' : 'Fetching information'
                                 }
                                 isLoading={user.isLoading}
                             >
@@ -258,12 +275,12 @@ const SellerContentProfile = () => {
                             name={user.resultById?.name}
                             src={
                                 !file?.source ?
-                                user.isFulfilled ?
-                                    `${process.env.REACT_APP_API_URL_IMAGE}${user.resultById?.image}`
+                                    user.isFulfilled ?
+                                        `${process.env.REACT_APP_API_URL_IMAGE}${user.resultById?.image}`
                                         :
-                                    `${process.env.REACT_APP_API_URL_IMAGE}${auth.login?.response?.image}`
+                                        `${process.env.REACT_APP_API_URL_IMAGE}${auth.login?.response?.image}`
                                     :
-                                file?.source
+                                    file?.source
                             }
                             size='2xl'
                             mb='105px'
@@ -274,9 +291,9 @@ const SellerContentProfile = () => {
                             rounded='32px'
                             size='lg'
                             top='60px'
-                            right={ file ? '126.5px' : '135.5px' }
-                            bg={ file ? '#DB3022' : 'transparent' }
-                            textColor={ file ? 'white' : '#A0AEC0' }
+                            right={file ? '126.5px' : '135.5px'}
+                            bg={file ? '#DB3022' : 'transparent'}
+                            textColor={file ? 'white' : '#A0AEC0'}
                             borderColor='#A0AEC0'
                             _hover={{
                                 bg: 'transparent',
@@ -294,7 +311,7 @@ const SellerContentProfile = () => {
                             }}
                             onClick={() => selectFile({ accept: 'image/*' })}
                         >
-                            { file ? 'Change' : 'Select image' }
+                            {file ? 'Change' : 'Select image'}
                         </Button>
                     </HStack>
                 </form>

@@ -16,7 +16,7 @@ import {
 const GetPaymentActionCreator = () => {
     return {
         type: GetPaymentAction,
-        payload: GetPayment
+        payload: GetPayment()
     }
 }
 const GetPaymentByIdActionCreator = id => {

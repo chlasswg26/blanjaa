@@ -41,7 +41,7 @@ const TokenActionCreator = body => {
 const LogoutActionCreator = () => {
     return {
         type: LogoutAction,
-        payload: LogoutUser
+        payload: LogoutUser()
     }
 }
 const ResetAuthStateActionCreator = () => {

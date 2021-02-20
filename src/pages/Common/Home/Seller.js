@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import { Flex } from '@chakra-ui/react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import SellerContentProfile from '../../../components/Navbar/Side/Seller/Profile/SellerContentProfile'
 import SellerNavbar from '../../../components/Navbar/Side/Seller/SellerNavbar'
 import UserNavbar from '../../../components/Navbar/UserNavbar'
@@ -13,7 +14,6 @@ import SellerContentNewPayment from '../../../components/Navbar/Side/Seller/Paym
 import SellerContentManagementPayment from '../../../components/Navbar/Side/Seller/Payment/SellerContentManagementPayment'
 import SellerContentManagementBanner from '../../../components/Navbar/Side/Seller/Banner/SellerContentManagementBanner'
 import SellerContentNewBanner from '../../../components/Navbar/Side/Seller/Banner/SellerContentNewBanner'
-import SellerMenu from '../../../components/Navbar/Side/Seller/SellerMenu'
 import MetaElement from '../../../components/MetaElement'
 
 const listPathOfOrders = [
@@ -21,11 +21,6 @@ const listPathOfOrders = [
     '/seller/order/cancel'
 ]
 const listPath = [
-    {
-        pathTo: '/seller',
-        component: SellerMenu,
-        subtitle: 'Seller'
-    },
     {
         pathTo: '/seller/profile',
         component: SellerContentProfile,
@@ -84,35 +79,44 @@ const element = {
 }
 
 const Seller = () => {
-    return (
-        <Fragment>
-            <UserNavbar />
-            <Flex
-                flexDirection='row'
-                flexWrap='wrap'
-                overflow='auto'
-                overflowWrap='anywhere'
-            >
-                <SellerNavbar />
-                <Switch>
-                    { listPath.map((sellerPath, sellerPathIndex) => (
-                        <Route
-                            key={sellerPathIndex}
-                            path={sellerPath.pathTo}
-                            exact={sellerPath.pathTo === '/seller' ? true : false}
-                        >
-                            <Fragment>
-                                <MetaElement
-                                    {...element}
-                                    subtitle={sellerPath.subtitle}
-                                />
-                                <sellerPath.component />
-                            </Fragment>
-                        </Route>
-                    )) }
-                </Switch>
-            </Flex>
-        </Fragment>
+  const auth = useSelector(state => state.Auth)
+  const storage = auth.login.response
+
+    return storage?.accessToken ? (
+        storage?.role === '2' ? (
+            <Fragment>
+                <UserNavbar />
+                <Flex
+                    flexDirection='row'
+                    flexWrap='wrap'
+                    overflow='auto'
+                    overflowWrap='anywhere'
+                >
+                    <SellerNavbar />
+                    <Switch>
+                        {listPath.map((sellerPath, sellerPathIndex) => (
+                            <Route
+                                key={sellerPathIndex}
+                                path={sellerPath.pathTo}
+                                exact={sellerPath.pathTo === '/seller' ? true : false}
+                            >
+                                <Fragment>
+                                    <MetaElement
+                                        {...element}
+                                        subtitle={sellerPath.subtitle}
+                                    />
+                                    <sellerPath.component />
+                                </Fragment>
+                            </Route>
+                        ))}
+                    </Switch>
+                </Flex>
+            </Fragment>
+        ) : (
+            <Redirect to='/customer' />
+        )
+    ) : (
+        <Redirect to='/auth/signin' />
     )
 }
 

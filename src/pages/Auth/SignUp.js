@@ -1,7 +1,7 @@
 import { Image, Tabs, TabList, Tab, Text, TabPanels, TabPanel, Box, Link, Alert, AlertIcon, AlertTitle, AlertDescription, Spacer, Center } from '@chakra-ui/react'
 import { Fragment } from 'react'
 import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import Logo from '../../assets/images/logo.png'
 import { containerStyles, tabStyles, tabWrapStyles, textFirstStyles } from '../../assets/styles/Forms/SignUp'
 import Customer from '../../components/Forms/SignUp/Customer'
@@ -10,11 +10,10 @@ import Seller from '../../components/Forms/SignUp/Seller'
 const SignUp = () => {
     const auth = useSelector(state => state.Auth)
     const storage = auth.login.response
-    const history = useHistory()
 
-    storage?.accessToken && history.replace('/')
-
-    return (
+    return storage?.accessToken ? (
+        <Redirect to='/' />
+        ) : (
         <Fragment>
             <Box {...containerStyles}>
                 <Image

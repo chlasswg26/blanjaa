@@ -1,10 +1,11 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect } from 'react'
 import {
     Switch,
     Route,
-    useHistory
+    useHistory,
+    Redirect
 } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import moment from 'moment'
 
 import Dashboard from './pages/Dashboard'
 import SignUp from './pages/Auth/SignUp'
@@ -19,6 +20,7 @@ import Category from './pages/Common/Category'
 import Product from './pages/Common/Product'
 
 import MetaElement from './components/MetaElement'
+import { useDispatch, useSelector } from 'react-redux'
 import { ResetAuthStateActionCreator } from './redux/actions/auth'
 
 let mainPath = [
@@ -66,6 +68,16 @@ let mainPath = [
         pathTo: '/auth/verify',
         component: Verify,
         subtitle: 'Verification'
+    },
+    {
+        pathTo: '/customer',
+        component: Customer,
+        subtitle: 'Customer'
+    },
+    {
+        pathTo: '/seller',
+        component: Seller,
+        subtitle: 'Seller'
     }
 ]
 
@@ -77,46 +89,49 @@ const element = {
 const AppRoutes = () => {
     const auth = useSelector(state => state.Auth)
     const storage = auth.login.response
-    const [filterPath, setFilterPath] = useState([])
     const dispatch = useDispatch()
     const history = useHistory()
 
-    useEffect(() => {
-        if (storage) {
-            storage?.accessToken && mainPath.splice(6, 3)
-            
-            setFilterPath(mainPath)
-            
-            const Jwt = (token = storage?.accessToken) => {
-                let decodedToken
+    const Jwt = (token = null) => {
+        let decodedToken
 
-                if (token) {
-                    decodedToken = token.split('.')[1]
-                    decodedToken = decodedToken.replace(/-/g, '+').replace(/_/g, '/')
-                    decodedToken = Buffer.from(decodedToken, 'base64')
-                    decodedToken = decodedToken.toString('ascii')
-                    decodedToken = JSON.parse(decodedToken)
+        if (token) {
+            decodedToken = token.split('.')[1]
+            decodedToken = decodedToken.replace(/-/g, '+').replace(/_/g, '/')
+            decodedToken = Buffer.from(decodedToken, 'base64')
+            decodedToken = decodedToken.toString('ascii')
+            decodedToken = JSON.parse(decodedToken)
+
+            return decodedToken
+        }
+
+        return null
+    }
+
+    useEffect(() => {
+        return history.listen(() => {
+            if (storage?.accessToken) {
+                const JwtToken = Jwt(storage?.accessToken)
+                const today = Date.now()
+                
+                if (process.env.NODE_ENV === 'development') {
+                    console.log('token expiry', moment(JwtToken?.exp * 1000).endOf('hour').fromNow())
+                    console.log('is expired?', eval(today >= JwtToken?.exp * 1000))
                 }
 
-                return decodedToken
+                if (today >= JwtToken?.exp * 1000) {
+                    dispatch(ResetAuthStateActionCreator())
+                    return <Redirect exact to='/auth/signin' />
+                }
             }
 
-            const token = Jwt()
+        })
+    }, [storage, history])
 
-            if (token?.exp < Date.now() / 1000) {
-                dispatch(ResetAuthStateActionCreator())
-                history.push('/auth/signin')
-            }
-        }
-    }, [
-        storage,
-        history
-    ])
-    
     return (
         <Fragment>
             <Switch>
-                {filterPath.map((path, pathIndex) => (
+                {mainPath.map((path, pathIndex) => (
                     <Route
                         key={pathIndex}
                         path={path.pathTo}
@@ -132,9 +147,6 @@ const AppRoutes = () => {
                     </Route>
                 ))}
             </Switch>
-            { storage?.accessToken && (
-                storage?.role === '1' ? <Customer /> : (storage?.role === '2' && <Seller />)
-            ) }
         </Fragment>
     )
 }
