@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import storage from 'redux-persist/lib/storage'
-import { persistReducer, createTransform } from 'redux-persist'
+import { persistReducer } from 'redux-persist'
+import { createWhitelistFilter } from 'redux-persist-transform-filter'
 import expireIn from 'redux-persist-transform-expire-in'
 
 import { LogoutAction } from '../actions/actionTypes'
@@ -16,24 +17,8 @@ import Product from './product'
 import History from './history'
 import GuestCart from './guestCart'
 
-const setTransformAuthLoginState = createTransform(
-    state => {
-        return {
-            response: {
-                ...state?.response
-            }
-        }
-    }
-)
-const setTransformVerifyState = createTransform(
-    state => {
-        return {
-            response: {
-                preview: state?.response?.preview
-            }
-        }
-    }
-)
+const setTransformAuthLoginState = createWhitelistFilter('login', ['response'])
+const setTransformVerifyState = createWhitelistFilter('register', ['response.preview', 'response.email'])
 
 const expirationTime = process.env.REACT_APP_EXPIRATION_STATE * 60 * 60 * 1000
 const setExpiringForStateVerify = expireIn(expirationTime, 'Verify', {})
@@ -42,15 +27,13 @@ const setExpiringForStateGuestCart = expireIn(expirationTime, 'GuestCart', [])
 const customPersistAuthLogin = {
     key: 'Login',
     storage: storage,
-    whitelist: ['login'],
     transforms: [
         setTransformAuthLoginState
     ]
 }
-const customPersistPreviewOnly = {
+const customPersistVerify = {
     key: 'Verify',
     storage: storage,
-    whitelist: ['register'],
     transforms: [
         setTransformVerifyState,
         setExpiringForStateVerify
@@ -66,7 +49,7 @@ const customPersistGuestCart = {
 
 const AppReducer = combineReducers({
     Verify: persistReducer(
-        customPersistPreviewOnly,
+        customPersistVerify,
         Auth
     ),
     Auth: persistReducer(

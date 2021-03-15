@@ -93,7 +93,7 @@ const AppRoutes = () => {
     const history = useHistory()
 
     const Jwt = (token = null) => {
-        let decodedToken
+        let decodedToken = null
 
         if (token) {
             decodedToken = token.split('.')[1]
@@ -105,7 +105,7 @@ const AppRoutes = () => {
             return decodedToken
         }
 
-        return null
+        return decodedToken
     }
 
     useEffect(() => {

@@ -1,19 +1,18 @@
 import { Image, Text, Box, Link, Center, Spacer, Alert, AlertIcon, AlertTitle, AlertDescription, Wrap, WrapItem } from '@chakra-ui/react'
 import { Fragment } from 'react'
 import { useSelector } from 'react-redux'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import Logo from '../../assets/images/logo.png'
 import { containerStyles, textFirstStyles, textSecondStyles, wrapperStyles } from '../../assets/styles/Forms/Verify'
 import Verification from '../../components/Forms/Verify/Verification'
 
 const Verify = () => {
-    const { state } = useLocation()
     const auth = useSelector(state => state.Auth)
     const storage = auth.login.response
+    const verify = useSelector(state => state.Verify)
     const history = useHistory()
     
-    !state?.guestEmail && history.replace('/auth/signup')
-    state?.guestEmail && !auth.register.response?.preview && history.replace('/auth/signup')
+    !verify.register.response?.preview && !verify.register.response?.email && history.replace('/auth/signup')
     storage?.accessToken && history.replace('/')
 
     return (
@@ -61,13 +60,13 @@ const Verify = () => {
                     </WrapItem>
                 </Wrap>
 
-                { auth.register.response?.preview && (
+                { verify.register.response?.preview && (
                     <Fragment>
                         <Spacer mt='48px' />
 
                         <Center>
                             <Link
-                                href={auth.register.response?.preview}
+                                href={verify.register.response?.preview}
                                 target='_blank'
                             >
                                 <Text {...textSecondStyles}>

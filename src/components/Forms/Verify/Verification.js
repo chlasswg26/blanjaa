@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { pinInputStyles } from '../../../assets/styles/Forms/Components/Verify/Verification'
 import qs from 'querystring'
 import { VerifyActionCreator } from '../../../redux/actions/auth'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 const Verification = () => {
     const [error, setError] = useState(false)
     const dispatch = useDispatch()
-    const { state } = useLocation()
     const auth = useSelector(state => state.Auth)
+    const verify = useSelector(state => state.Verify)
     const history = useHistory()
 
     const handleChangePin = value => {
@@ -27,7 +27,7 @@ const Verification = () => {
                 VerifyActionCreator(
                     qs.stringify(
                         {
-                            email: state?.guestEmail,
+                            email: verify.register.response?.email,
                             otp_code: value
                         }
                     )
@@ -42,7 +42,7 @@ const Verification = () => {
         if (auth?.verify?.isFulfilled) {
             history.push('/auth/signin', {
                 type: 'success',
-                message: auth?.verify?.response?.message
+                message: auth.verify.response?.message
             })
         }
     }, [

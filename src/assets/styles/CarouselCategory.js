@@ -1,8 +1,7 @@
 const horizontalStackStyles = {
-    h: '100',
-    minW: 'md',
     bg: '#EDF0F3',
     overflow: 'auto',
+    overflowWrap: 'anywhere',
     p: '50px'
 }
 const textFirstStyles = {

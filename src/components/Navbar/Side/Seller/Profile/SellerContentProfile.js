@@ -275,10 +275,10 @@ const SellerContentProfile = () => {
                             name={user.resultById?.name}
                             src={
                                 !file?.source ?
-                                    user.isFulfilled ?
+                                    user.resultById?.image ?
                                         `${process.env.REACT_APP_API_URL_IMAGE}${user.resultById?.image}`
                                         :
-                                        `${process.env.REACT_APP_API_URL_IMAGE}${auth.login?.response?.image}`
+                                        auth.login.response?.image ? `${process.env.REACT_APP_API_URL_IMAGE}${auth.login.response?.image}` : null
                                     :
                                     file?.source
                             }

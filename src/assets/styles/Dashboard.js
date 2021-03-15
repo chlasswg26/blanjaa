@@ -1,7 +1,6 @@
 const horizontalStackStyles = {
-    h: '100',
-    minW: 'md',
     overflow: 'auto',
+    overflowWrap: 'anywhere',
     p: '30px',
     pl: '45px',
     d: 'block'
