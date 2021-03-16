@@ -5,6 +5,7 @@ import { pinInputStyles } from '../../../assets/styles/Forms/Components/Verify/V
 import qs from 'querystring'
 import { VerifyActionCreator } from '../../../redux/actions/auth'
 import { useHistory } from 'react-router-dom'
+import { persistor } from '../../../redux/store'
 
 const Verification = () => {
     const [error, setError] = useState(false)
@@ -39,7 +40,8 @@ const Verification = () => {
     }
 
     useEffect(() => {
-        if (auth?.verify?.isFulfilled) {
+        if (auth.verify.isFulfilled) {
+            persistor.purge(['Verify'])
             history.push('/auth/signin', {
                 type: 'success',
                 message: auth.verify.response?.message

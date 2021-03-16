@@ -20,8 +20,8 @@ import Category from './pages/Common/Category'
 import Product from './pages/Common/Product'
 
 import MetaElement from './components/MetaElement'
-import { useDispatch, useSelector } from 'react-redux'
-import { ResetAuthStateActionCreator } from './redux/actions/auth'
+import { useSelector } from 'react-redux'
+import { persistor } from './redux/store'
 
 let mainPath = [
     {
@@ -89,7 +89,6 @@ const element = {
 const AppRoutes = () => {
     const auth = useSelector(state => state.Auth)
     const storage = auth.login.response
-    const dispatch = useDispatch()
     const history = useHistory()
 
     const Jwt = (token = null) => {
@@ -120,7 +119,7 @@ const AppRoutes = () => {
                 }
 
                 if (today >= JwtToken?.exp * 1000) {
-                    dispatch(ResetAuthStateActionCreator())
+                    persistor.purge(['Login'])
                     return <Redirect exact to='/auth/signin' />
                 }
             }
