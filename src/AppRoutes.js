@@ -22,6 +22,7 @@ import Product from './pages/Common/Product'
 import MetaElement from './components/MetaElement'
 import { useDispatch, useSelector } from 'react-redux'
 import { ResetAuthStateActionCreator } from './redux/actions/auth'
+import { persistor } from './redux/store'
 
 let mainPath = [
     {
@@ -120,7 +121,7 @@ const AppRoutes = () => {
                 }
 
                 if (today >= JwtToken?.exp * 1000) {
-                    dispatch(ResetAuthStateActionCreator())
+                    persistor.purge(['Login'])
                     return <Redirect exact to='/auth/signin' />
                 }
             }
