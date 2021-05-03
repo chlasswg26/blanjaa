@@ -120,12 +120,14 @@ const AppRoutes = () => {
 
                 if (today >= JwtToken?.exp * 1000) {
                     persistor.purge(['Login'])
-                    return <Redirect exact to='/auth/signin' />
+                    return history.push('/auth/signin')
                 }
+            } else {
+                return <Redirect exact to='/auth/signin' />
             }
 
         })
-    }, [storage, history])
+    }, [storage])
 
     return (
         <Fragment>

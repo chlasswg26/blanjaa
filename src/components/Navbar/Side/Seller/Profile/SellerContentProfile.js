@@ -262,12 +262,10 @@ const SellerContentProfile = () => {
                             </Button>
                         </Stack>
                         <Divider
-                            zIndex={4}
                             orientation='vertical'
-                            height='200px'
-                            pr='395.5px'
-                            mb='75px'
-                            mr='-290px'
+                            height='100px'
+                            pr='125px'
+                            pb='50px'
                             borderColor='#CBCBCB'
                         />
                         <Avatar
@@ -283,7 +281,7 @@ const SellerContentProfile = () => {
                                     file?.source
                             }
                             size='2xl'
-                            mb='105px'
+                            mb='5px'
                         />
                         <Button
                             zIndex={4}
